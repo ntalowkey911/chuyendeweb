@@ -22,7 +22,6 @@ export default function SignUpPage() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   
-  // OTP Verification state
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [code, setCode] = useState("");
   
