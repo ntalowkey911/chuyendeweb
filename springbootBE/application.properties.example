@@ -1,0 +1,5 @@
+# Copy values to src/main/resources/application.properties or set environment variables
+server.port=8080
+spring.data.mongodb.uri=mongodb+srv://USER:PASSWORD@cluster.mongodb.net/shopdb?retryWrites=true&w=majority&appName=cdweb
+jwt.secret=change_this_to_a_long_random_secret_at_least_32_chars
+jwt.expiration=86400000
