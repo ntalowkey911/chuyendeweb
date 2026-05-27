@@ -1,0 +1,50 @@
+import { create } from "zustand";
+import type { Cart } from "@/types/cart";
+import { cartService } from "@/services/cartService";
+
+interface CartState {
+  cart: Cart | null;
+  loading: boolean;
+  fetchCart: () => Promise<void>;
+  addToCart: (productId: string, quantity?: number) => Promise<void>;
+  updateQuantity: (productId: string, quantity: number) => Promise<void>;
+  removeItem: (productId: string) => Promise<void>;
+  clearCart: () => Promise<void>;
+}
+
+export const useCartStore = create<CartState>((set) => ({
+  cart: null,
+  loading: false,
+
+  fetchCart: async () => {
+    set({ loading: true });
+    try {
+      const res = await cartService.get();
+      set({ cart: res.data });
+    } catch {
+      set({ cart: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  addToCart: async (productId, quantity = 1) => {
+    const res = await cartService.add(productId, quantity);
+    set({ cart: res.data });
+  },
+
+  updateQuantity: async (productId, quantity) => {
+    const res = await cartService.update(productId, quantity);
+    set({ cart: res.data });
+  },
+
+  removeItem: async (productId) => {
+    const res = await cartService.remove(productId);
+    set({ cart: res.data });
+  },
+
+  clearCart: async () => {
+    const res = await cartService.clear();
+    set({ cart: res.data });
+  },
+}));
