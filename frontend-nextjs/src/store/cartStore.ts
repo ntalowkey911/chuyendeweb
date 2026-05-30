@@ -29,18 +29,30 @@ export const useCartStore = create<CartState>((set) => ({
   },
 
   addToCart: async (productId, quantity = 1) => {
-    const res = await cartService.add(productId, quantity);
-    set({ cart: res.data });
+    try {
+      const res = await cartService.add(productId, quantity);
+      set({ cart: res.data });
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Lỗi khi thêm vào giỏ hàng");
+    }
   },
 
   updateQuantity: async (productId, quantity) => {
-    const res = await cartService.update(productId, quantity);
-    set({ cart: res.data });
+    try {
+      const res = await cartService.update(productId, quantity);
+      set({ cart: res.data });
+    } catch (error: any) {
+      alert(error.response?.data?.message || "Lỗi khi cập nhật giỏ hàng");
+    }
   },
 
   removeItem: async (productId) => {
-    const res = await cartService.remove(productId);
-    set({ cart: res.data });
+    try {
+      const res = await cartService.remove(productId);
+      set({ cart: res.data });
+    } catch (error: any) {
+      alert("Lỗi khi xóa sản phẩm khỏi giỏ hàng");
+    }
   },
 
   clearCart: async () => {

@@ -36,7 +36,15 @@ async function fetchStorefront<T>(
   });
 
   if (!response.ok) {
-    throw new Error(`Storefront request failed: ${response.status}`);
+    console.warn(`[Storefront] Request failed: ${response.status} for ${endpoint}`);
+    // Prevent Vercel build from crashing if the backend is down or returns 401/500
+    if (path.startsWith("/products") && !path.includes("/", 10)) {
+      return [] as unknown as T;
+    }
+    if (path.startsWith("/categories")) {
+      return [] as unknown as T;
+    }
+    return null as unknown as T;
   }
 
   return response.json() as Promise<T>;

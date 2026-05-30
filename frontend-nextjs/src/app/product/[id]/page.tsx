@@ -14,6 +14,10 @@ export default async function ProductDetailPage({
 
   try {
     const product = await getStorefrontProduct(id);
+    
+    if (!product) {
+      return notFound();
+    }
 
     return (
       <div className="flex min-h-screen flex-col bg-background">

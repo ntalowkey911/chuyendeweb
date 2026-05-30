@@ -13,6 +13,7 @@ import { useCartStore } from "@/store/cartStore";
 import type { PaymentMethod } from "@/types/order";
 import { formatPrice } from "@/utils/format";
 import { getPaymentMethodLabel } from "@/utils/catalog";
+import { addressApi, type Province, type District, type Ward } from "@/services/addressApi";
 
 const checkoutGifs = [
   "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnJrbjZmcmZvMWViaDZrNDFrYml1cTNvNDJsZHp1MDBxcnJ4ZGprZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/a3IWyhkEC0p32/giphy.gif",
@@ -31,24 +32,76 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  const [useSavedAddress, setUseSavedAddress] = useState(true);
+  const [provinces, setProvinces] = useState<Province[]>([]);
+  const [districts, setDistricts] = useState<District[]>([]);
+  const [wards, setWards] = useState<Ward[]>([]);
+  const [selectedProvinceCode, setSelectedProvinceCode] = useState<number | "">("");
+  const [selectedDistrictCode, setSelectedDistrictCode] = useState<number | "">("");
+  const [selectedWardCode, setSelectedWardCode] = useState<number | "">("");
+  const [street, setStreet] = useState("");
+
   useEffect(() => {
     void fetchCart();
     void fetchMe();
+    addressApi.getProvinces().then(setProvinces);
   }, [fetchCart, fetchMe]);
 
   useEffect(() => {
-    setShippingAddress(user?.address || "");
-    setPhone(user?.phone || "");
+    if (user) {
+      setShippingAddress(user.address || "");
+      setPhone(user.phone || "");
+      if (!user.address) {
+        setUseSavedAddress(false);
+      }
+    }
   }, [user]);
+
+  useEffect(() => {
+    if (selectedProvinceCode) {
+      addressApi.getDistricts(Number(selectedProvinceCode)).then(setDistricts);
+    } else {
+      setDistricts([]);
+    }
+    setSelectedDistrictCode("");
+    setSelectedWardCode("");
+    setWards([]);
+  }, [selectedProvinceCode]);
+
+  useEffect(() => {
+    if (selectedDistrictCode) {
+      addressApi.getWards(Number(selectedDistrictCode)).then(setWards);
+    } else {
+      setWards([]);
+    }
+    setSelectedWardCode("");
+  }, [selectedDistrictCode]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
     setError("");
 
+    let finalAddress = shippingAddress;
+    if (!useSavedAddress) {
+      const p = provinces.find((x) => x.code === Number(selectedProvinceCode))?.name;
+      const d = districts.find((x) => x.code === Number(selectedDistrictCode))?.name;
+      const w = wards.find((x) => x.code === Number(selectedWardCode))?.name;
+      if (!p || !d || !w || !street.trim()) {
+        setError("Vui lòng nhập đầy đủ địa chỉ giao hàng.");
+        setLoading(false);
+        return;
+      }
+      finalAddress = `${street.trim()}, ${w}, ${d}, ${p}`;
+    } else if (!finalAddress.trim()) {
+      setError("Vui lòng nhập địa chỉ giao hàng.");
+      setLoading(false);
+      return;
+    }
+
     try {
       await orderService.create({
-        shippingAddress: shippingAddress.trim(),
+        shippingAddress: finalAddress,
         phone: phone.trim(),
         paymentMethod,
       });
@@ -98,16 +151,88 @@ function CheckoutContent() {
                 </div>
 
                 <div>
-                  <p className="mb-2 text-xs font-black uppercase tracking-[0.22em] text-slate-500">
-                    Địa chỉ giao hàng và ghi chú thêm (nếu có)
-                  </p>
-                  <textarea
-                    className="min-h-32 w-full rounded-[1.5rem] border border-slate-200 px-4 py-3 outline-none focus:border-primary"
-                    placeholder="Địa chỉ giao hàng"
-                    value={shippingAddress}
-                    onChange={(event) => setShippingAddress(event.target.value)}
-                    required
-                  />
+                  <div className="mb-4 flex items-center justify-between">
+                    <p className="text-xs font-black uppercase tracking-[0.22em] text-slate-500">
+                      Địa chỉ giao hàng
+                    </p>
+                    {user?.address && (
+                      <button
+                        type="button"
+                        onClick={() => setUseSavedAddress(!useSavedAddress)}
+                        className="text-sm font-bold text-primary hover:underline"
+                      >
+                        {useSavedAddress ? "Nhập địa chỉ mới" : "Dùng địa chỉ đã lưu"}
+                      </button>
+                    )}
+                  </div>
+
+                  {useSavedAddress && user?.address ? (
+                    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
+                      <p className="font-medium text-slate-800">{user.address}</p>
+                      <p className="mt-1 text-sm text-slate-500">
+                        (Địa chỉ này được lấy từ Hồ sơ của bạn)
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4 rounded-[1.5rem] border border-slate-200 p-5">
+                      <div className="grid gap-4 md:grid-cols-3">
+                        <div>
+                          <label className="mb-1 block text-sm font-semibold text-slate-700">Tỉnh/Thành</label>
+                          <select
+                            value={selectedProvinceCode}
+                            onChange={(e) => setSelectedProvinceCode(e.target.value ? Number(e.target.value) : "")}
+                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary text-sm"
+                            required={!useSavedAddress}
+                          >
+                            <option value="">Chọn Tỉnh/Thành</option>
+                            {provinces.map((p) => (
+                              <option key={p.code} value={p.code}>{p.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-sm font-semibold text-slate-700">Quận/Huyện</label>
+                          <select
+                            value={selectedDistrictCode}
+                            onChange={(e) => setSelectedDistrictCode(e.target.value ? Number(e.target.value) : "")}
+                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
+                            required={!useSavedAddress}
+                            disabled={!selectedProvinceCode}
+                          >
+                            <option value="">Chọn Quận/Huyện</option>
+                            {districts.map((d) => (
+                              <option key={d.code} value={d.code}>{d.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                        <div>
+                          <label className="mb-1 block text-sm font-semibold text-slate-700">Phường/Xã</label>
+                          <select
+                            value={selectedWardCode}
+                            onChange={(e) => setSelectedWardCode(e.target.value ? Number(e.target.value) : "")}
+                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
+                            required={!useSavedAddress}
+                            disabled={!selectedDistrictCode}
+                          >
+                            <option value="">Chọn Phường/Xã</option>
+                            {wards.map((w) => (
+                              <option key={w.code} value={w.code}>{w.name}</option>
+                            ))}
+                          </select>
+                        </div>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-sm font-semibold text-slate-700">Số nhà, Tên đường</label>
+                        <input
+                          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 outline-none focus:border-primary text-sm"
+                          placeholder="Ví dụ: 123 Đường ABC..."
+                          value={street}
+                          onChange={(e) => setStreet(e.target.value)}
+                          required={!useSavedAddress}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 <div className="rounded-[1.5rem] border border-slate-200 p-4">
