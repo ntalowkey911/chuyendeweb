@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useAuthStore } from "@/store/authStore";
 import { useCartStore } from "@/store/cartStore";
+import { useUser } from "@clerk/nextjs";
 import type { Product } from "@/types/product";
 import { Button } from "./ui/button";
 
@@ -16,16 +17,22 @@ const fallbackImage =
   "https://images.unsplash.com/photo-1514996937319-344454492b37?auto=format&fit=crop&w=640&q=70";
 
 export function ProductCard({ product }: ProductCardProps) {
-  const user = useAuthStore((state) => state.user);
+  const userStore = useAuthStore((state) => state.user);
+  const { user, isLoaded } = useUser();
   const addToCart = useCartStore((state) => state.addToCart);
   const [adding, setAdding] = useState(false);
+  const [wishlistLoading, setWishlistLoading] = useState(false);
+  
   const displayImage = product.imageUrls?.[0] || product.imageUrl || fallbackImage;
+
+  const wishlistIds = (user?.unsafeMetadata?.wishlist as string[]) || [];
+  const isWishlisted = wishlistIds.includes(product.id);
 
   const handleAdd = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     event.stopPropagation();
 
-    if (!user) {
+    if (!userStore) {
       window.location.href = "/login";
       return;
     }
@@ -35,6 +42,37 @@ export function ProductCard({ product }: ProductCardProps) {
       await addToCart(product.id, 1);
     } finally {
       setAdding(false);
+    }
+  };
+
+  const handleToggleWishlist = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    if (!user) {
+      window.location.href = "/login";
+      return;
+    }
+    
+    setWishlistLoading(true);
+    try {
+      let newWishlist = [...wishlistIds];
+      if (isWishlisted) {
+        newWishlist = newWishlist.filter(id => id !== product.id);
+      } else {
+        newWishlist.push(product.id);
+      }
+      
+      await user.update({
+        unsafeMetadata: {
+          ...user.unsafeMetadata,
+          wishlist: newWishlist
+        }
+      });
+    } catch (e) {
+      console.error("Failed to update wishlist", e);
+    } finally {
+      setWishlistLoading(false);
     }
   };
 
@@ -52,6 +90,27 @@ export function ProductCard({ product }: ProductCardProps) {
           sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
+        
+        {/* Wishlist Button */}
+        <button
+          onClick={handleToggleWishlist}
+          disabled={wishlistLoading}
+          className="absolute right-3 top-3 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 text-slate-400 shadow-sm backdrop-blur transition-all hover:scale-110 hover:bg-white hover:text-rose-500 disabled:opacity-50"
+        >
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="18" 
+            height="18" 
+            viewBox="0 0 24 24" 
+            fill={isWishlisted ? "#f43f5e" : "none"} 
+            stroke={isWishlisted ? "#f43f5e" : "currentColor"} 
+            strokeWidth="2" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+          </svg>
+        </button>
       </div>
 
       <div className="flex flex-1 flex-col p-3 sm:p-4">

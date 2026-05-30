@@ -54,9 +54,9 @@ export function Header() {
       })}
       {user && (
         <Link
-          href="/orders"
+          href="/profile/orders"
           className={
-            pathname.startsWith("/orders")
+            pathname.startsWith("/profile/orders")
               ? "text-primary"
               : "text-slate-600 transition-colors hover:text-primary"
           }
@@ -137,7 +137,7 @@ export function Header() {
 
             <SignedIn>
               <div className="hidden md:block">
-                <UserButton afterSignOutUrl="/" />
+                <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
               </div>
             </SignedIn>
             <SignedOut>
@@ -163,8 +163,8 @@ export function Header() {
               {sharedLinks}
               <SignedIn>
                 <div className="flex items-center gap-4 rounded-2xl bg-slate-50 px-4 py-3 text-slate-700">
-                  <UserButton afterSignOutUrl="/" />
-                  <span className="font-bold text-slate-900">Tài khoản của bạn</span>
+                  <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
+                  <Link href="/profile" className="font-bold text-slate-900">Tài khoản của bạn</Link>
                 </div>
               </SignedIn>
               <SignedOut>

@@ -19,7 +19,7 @@ export const authService = {
   me: () => api.get<User>("/auth/me"),
 
   syncClerk: (data: { clerkId: string; email: string; fullName: string; avatarUrl: string; phone?: string; address?: string }, token: string) =>
-    api.post<{id: string, email: string, fullName: string, role: string}>("/users/sync-clerk", data, {
+    api.post<User>("/users/sync-clerk", data, {
       headers: { Authorization: `Bearer ${token}` }
     }),
 };
