@@ -19,7 +19,17 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping
-    public List<ProductResponse> getAll() {
+    public List<ProductResponse> getAll(
+            @RequestParam(required = false) String category,
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String price,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) Integer limit,
+            @RequestParam(defaultValue = "false") boolean activeOnly
+    ) {
+        if (category != null || keyword != null || price != null || sort != null || limit != null || activeOnly) {
+            return productService.getCatalog(category, keyword, price, sort, limit, activeOnly);
+        }
         return productService.getAll();
     }
 

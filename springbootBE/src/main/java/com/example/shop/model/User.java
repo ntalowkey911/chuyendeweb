@@ -35,6 +35,16 @@ public class User {
     @Builder.Default
     private Role role = Role.USER;
 
+    @Indexed(unique = true, sparse = true)
+    private String clerkId;
+
+    private String avatarUrl;
+
+    private Instant lastLoginAt;
+
+    @Builder.Default
+    private int loginCount = 0;
+
     @CreatedDate
     private Instant createdAt;
 }

@@ -1,7 +1,9 @@
 package com.example.shop.service;
 
+import com.example.shop.dto.admin.AdminOverviewResponse;
 import com.example.shop.dto.admin.CustomerStatsResponse;
 import com.example.shop.dto.admin.DashboardResponse;
+import com.example.shop.dto.category.CategoryResponse;
 import com.example.shop.dto.auth.UserResponse;
 import com.example.shop.dto.order.OrderResponse;
 import com.example.shop.dto.product.ProductResponse;
@@ -26,6 +28,7 @@ public class AdminService {
     private final OrderRepository orderRepository;
     private final ProductService productService;
     private final OrderService orderService;
+    private final CategoryService categoryService;
 
     public DashboardResponse getDashboard() {
         BigDecimal revenue = orderRepository.findAll().stream()
@@ -60,6 +63,20 @@ public class AdminService {
 
     public List<OrderResponse> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    public AdminOverviewResponse getOverview() {
+        DashboardResponse stats = getDashboard();
+        List<ProductResponse> products = productService.getCatalog(null, null, null, null, null, false);
+        List<CustomerStatsResponse> customers = getCustomerStats();
+        List<CategoryResponse> categories = categoryService.getAll();
+
+        return AdminOverviewResponse.builder()
+                .stats(stats)
+                .products(products)
+                .customers(customers)
+                .categories(categories)
+                .build();
     }
 
     private CustomerStatsResponse toCustomerStats(User user, List<Order> orders) {

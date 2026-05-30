@@ -8,8 +8,10 @@ export interface Product {
   imageUrl?: string;
   imageUrls?: string[];
   category: string;
+  categoryName?: string;
   brand?: string;
   stock: number;
+  soldCount?: number;
   status: ProductStatus;
   createdAt?: string;
   updatedAt?: string;

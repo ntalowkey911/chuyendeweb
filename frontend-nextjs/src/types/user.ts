@@ -15,5 +15,7 @@ export interface AuthResponse {
   userId: string;
   fullName: string;
   email: string;
+  phone?: string;
+  address?: string;
   role: Role;
 }

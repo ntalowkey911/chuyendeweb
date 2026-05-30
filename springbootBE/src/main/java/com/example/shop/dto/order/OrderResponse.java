@@ -18,6 +18,7 @@ public class OrderResponse {
     private List<OrderItem> items;
     private String shippingAddress;
     private String phone;
+    private com.example.shop.model.PaymentMethod paymentMethod;
     private BigDecimal totalAmount;
     private OrderStatus status;
     private Instant createdAt;

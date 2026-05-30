@@ -19,8 +19,10 @@ public class ProductResponse {
     private String imageUrl;
     private List<String> imageUrls;
     private String category;
+    private String categoryName;
     private String brand;
     private Integer stock;
+    private Integer soldCount;
     private ProductStatus status;
     private Instant createdAt;
     private Instant updatedAt;

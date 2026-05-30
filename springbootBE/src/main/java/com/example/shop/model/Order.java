@@ -32,6 +32,9 @@ public class Order {
 
     private String phone;
 
+    @Builder.Default
+    private PaymentMethod paymentMethod = PaymentMethod.CASH_ON_DELIVERY;
+
     private BigDecimal totalAmount;
 
     @Builder.Default

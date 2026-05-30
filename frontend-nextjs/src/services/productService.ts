@@ -1,8 +1,18 @@
 import api from "./api";
 import type { Product } from "@/types/product";
 
+type ProductQuery = {
+  activeOnly?: boolean;
+  category?: string;
+  keyword?: string;
+  price?: string;
+  sort?: string;
+  limit?: number;
+};
+
 export const productService = {
   getAll: () => api.get<Product[]>("/products"),
+  list: (params?: ProductQuery) => api.get<Product[]>("/products", { params }),
   getById: (id: string) => api.get<Product>(`/products/${id}`),
   search: (keyword: string) =>
     api.get<Product[]>("/products/search", { params: { keyword } }),

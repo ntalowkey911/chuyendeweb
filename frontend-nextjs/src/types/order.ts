@@ -5,6 +5,8 @@ export type OrderStatus =
   | "COMPLETED"
   | "CANCELLED";
 
+export type PaymentMethod = "BANK_TRANSFER" | "CASH_ON_DELIVERY";
+
 export interface OrderItem {
   productId: string;
   productName: string;
@@ -18,6 +20,7 @@ export interface Order {
   items: OrderItem[];
   shippingAddress: string;
   phone: string;
+  paymentMethod: PaymentMethod;
   totalAmount: number;
   status: OrderStatus;
   createdAt?: string;

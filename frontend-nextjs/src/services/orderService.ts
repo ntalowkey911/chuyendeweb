@@ -1,5 +1,5 @@
 import api from "./api";
-import type { Order, OrderStatus } from "@/types/order";
+import type { Order, OrderStatus, PaymentMethod } from "@/types/order";
 import type { Role } from "@/types/user";
 
 export interface DashboardStats {
@@ -23,7 +23,7 @@ export interface CustomerStats {
 }
 
 export const orderService = {
-  create: (data: { shippingAddress: string; phone: string }) =>
+  create: (data: { shippingAddress: string; phone: string; paymentMethod: PaymentMethod }) =>
     api.post<Order>("/orders", data),
   myOrders: () => api.get<Order[]>("/orders/my-orders"),
   getById: (id: string) => api.get<Order>(`/orders/${id}`),

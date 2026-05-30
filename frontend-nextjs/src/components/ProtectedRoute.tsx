@@ -11,24 +11,31 @@ interface Props {
 
 export default function ProtectedRoute({ children, adminOnly }: Props) {
   const router = useRouter();
-  const { user, hydrate, isAdmin } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  const hydrated = useAuthStore((state) => state.hydrated);
+  const isAdmin = useAuthStore((state) => state.isAdmin);
 
   useEffect(() => {
-    hydrate();
-  }, [hydrate]);
+    if (!hydrated) {
+      return;
+    }
 
-  useEffect(() => {
     if (!user) {
       router.replace("/login");
       return;
     }
+
     if (adminOnly && !isAdmin()) {
       router.replace("/");
     }
-  }, [user, adminOnly, isAdmin, router]);
+  }, [adminOnly, hydrated, isAdmin, router, user]);
+
+  if (!hydrated) {
+    return <p className="p-8 text-center">Đang kiểm tra quyền...</p>;
+  }
 
   if (!user || (adminOnly && !isAdmin())) {
-    return <p className="p-8 text-center">Đang kiểm tra quyền...</p>;
+    return <p className="p-8 text-center">Đang chuyển trang...</p>;
   }
 
   return <>{children}</>;

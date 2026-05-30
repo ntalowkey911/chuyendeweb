@@ -6,8 +6,10 @@ interface AuthState {
   user: User | null;
   token: string | null;
   loading: boolean;
+  hydrated: boolean;
   setAuth: (data: AuthResponse) => void;
-  login: (email: string, password: string) => Promise<void>;
+  login: (identifier: string, password: string) => Promise<void>;
+  loginWithGoogle: (credential: string) => Promise<void>;
   register: (data: {
     fullName: string;
     email: string;
@@ -25,6 +27,7 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   user: null,
   token: null,
   loading: false,
+  hydrated: false,
 
   setAuth: (data) => {
     localStorage.setItem("token", data.token);
@@ -34,6 +37,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         id: data.userId,
         fullName: data.fullName,
         email: data.email,
+        phone: data.phone,
+        address: data.address,
         role: data.role,
       })
     );
@@ -43,13 +48,21 @@ export const useAuthStore = create<AuthState>((set, get) => ({
         id: data.userId,
         fullName: data.fullName,
         email: data.email,
+        phone: data.phone,
+        address: data.address,
         role: data.role as Role,
       },
+      hydrated: true,
     });
   },
 
-  login: async (email, password) => {
-    const res = await authService.login({ email, password });
+  login: async (identifier, password) => {
+    const res = await authService.login({ identifier, password });
+    get().setAuth(res.data);
+  },
+
+  loginWithGoogle: async (credential) => {
+    const res = await authService.googleLogin(credential);
     get().setAuth(res.data);
   },
 
@@ -58,9 +71,14 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   },
 
   fetchMe: async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      set({ hydrated: true });
+      return;
+    }
     try {
       const res = await authService.me();
-      set({ user: res.data });
+      set({ user: res.data, hydrated: true });
       localStorage.setItem("user", JSON.stringify(res.data));
     } catch {
       get().logout();
@@ -70,16 +88,22 @@ export const useAuthStore = create<AuthState>((set, get) => ({
   logout: () => {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    set({ user: null, token: null });
+    set({ user: null, token: null, hydrated: true });
   },
 
   isAdmin: () => get().user?.role === "ADMIN",
 
   hydrate: () => {
+    if (get().hydrated) {
+      return;
+    }
+
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("user");
     if (token && userStr) {
-      set({ token, user: JSON.parse(userStr) });
+      set({ token, user: JSON.parse(userStr) as User, hydrated: true });
+      return;
     }
+    set({ hydrated: true });
   },
 }));

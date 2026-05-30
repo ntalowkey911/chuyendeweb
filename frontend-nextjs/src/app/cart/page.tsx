@@ -22,13 +22,13 @@ function CartContent() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
 
-      <main className="flex-1 py-12">
+      <main className="flex-1 py-8 md:py-12">
         <Container>
-          <div className="mb-8 flex items-center justify-between gap-4">
-            <div>
-              <h1 className="text-3xl font-black text-slate-900">Giỏ hàng của bạn</h1>
-              <p className="mt-2 text-slate-600">Cập nhật số lượng và chuyển sang bước thanh toán.</p>
-            </div>
+          <div className="mb-8">
+            <h1 className="text-3xl font-black text-slate-900">Giỏ hàng của bạn</h1>
+            <p className="mt-2 text-slate-600">
+              Cập nhật số lượng rồi chuyển sang bước thanh toán.
+            </p>
           </div>
 
           {loading && <p className="py-10 text-slate-500">Đang tải giỏ hàng...</p>}

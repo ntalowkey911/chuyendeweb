@@ -41,6 +41,7 @@ public class OrderService {
         for (CartItem item : cart.getItems()) {
             Product product = productService.findProduct(item.getProductId());
             product.setStock(product.getStock() - item.getQuantity());
+            product.setSoldCount((product.getSoldCount() == null ? 0 : product.getSoldCount()) + item.getQuantity());
             productService.saveProduct(product);
 
             orderItems.add(OrderItem.builder()
@@ -57,6 +58,7 @@ public class OrderService {
                 .items(orderItems)
                 .shippingAddress(request.getShippingAddress())
                 .phone(request.getPhone())
+                .paymentMethod(request.getPaymentMethod())
                 .totalAmount(cart.getTotalAmount())
                 .status(OrderStatus.PENDING)
                 .createdAt(Instant.now())
@@ -104,6 +106,7 @@ public class OrderService {
                 .items(order.getItems())
                 .shippingAddress(order.getShippingAddress())
                 .phone(order.getPhone())
+                .paymentMethod(order.getPaymentMethod())
                 .totalAmount(order.getTotalAmount())
                 .status(order.getStatus())
                 .createdAt(order.getCreatedAt())

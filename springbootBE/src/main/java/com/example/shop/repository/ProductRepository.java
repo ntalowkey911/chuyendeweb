@@ -9,6 +9,8 @@ public interface ProductRepository extends MongoRepository<Product, String> {
 
     List<Product> findByCategoryIgnoreCase(String category);
 
+    boolean existsByCategoryIgnoreCase(String category);
+
     List<Product> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCaseOrCategoryContainingIgnoreCaseOrBrandContainingIgnoreCase(
             String name,
             String description,

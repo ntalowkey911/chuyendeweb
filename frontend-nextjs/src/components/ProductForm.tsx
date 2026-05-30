@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
-import { PRODUCT_CATEGORIES } from "@/utils/catalog";
 
 interface Props {
+  categories: Category[];
   initial?: Partial<Product>;
   onSubmit: (data: Partial<Product>) => Promise<void>;
   onCancel?: () => void;
@@ -12,14 +13,14 @@ interface Props {
 
 const MAX_IMAGE_SIZE = 640;
 
-export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
+export default function ProductForm({ categories, initial, onSubmit, onCancel }: Props) {
   const [form, setForm] = useState({
     name: initial?.name || "",
     description: initial?.description || "",
     price: initial?.price?.toString() || "",
     imageUrl: initial?.imageUrl || "",
     imageUrls: initial?.imageUrls || [],
-    category: initial?.category || PRODUCT_CATEGORIES[0].value,
+    category: initial?.category || categories[0]?.slug || "",
     brand: initial?.brand || "",
     stock: initial?.stock?.toString() || "0",
     status: initial?.status || ("ACTIVE" as Product["status"]),
@@ -57,9 +58,7 @@ export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
     if (!files?.length) return;
     setImageLoading(true);
     try {
-      const images = await Promise.all(
-        Array.from(files).map((file) => resizeImage(file))
-      );
+      const images = await Promise.all(Array.from(files).map((file) => resizeImage(file)));
       setForm((current) => ({
         ...current,
         imageUrl: images[0] || current.imageUrl,
@@ -96,7 +95,7 @@ export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 rounded border bg-white p-4">
-      {field("Tên", "name")}
+      {field("Tên sản phẩm", "name")}
       <label className="block text-sm">
         <span className="mb-1 block font-medium">Mô tả</span>
         <textarea
@@ -118,9 +117,9 @@ export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
             onChange={(e) => setForm({ ...form, category: e.target.value })}
             required
           >
-            {PRODUCT_CATEGORIES.map((category) => (
-              <option key={category.value} value={category.value}>
-                {category.label}
+            {categories.map((category) => (
+              <option key={category.id} value={category.slug}>
+                {category.name}
               </option>
             ))}
           </select>
@@ -137,7 +136,7 @@ export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
           onChange={(e) => handleFiles(e.target.files)}
         />
         <span className="mt-1 block text-xs text-slate-500">
-          Ảnh sẽ được tự nén về tối đa {MAX_IMAGE_SIZE}px để tải nhẹ hơn.
+          Ảnh sẽ tự nén về tối đa {MAX_IMAGE_SIZE}px để tải nhẹ hơn.
         </span>
       </label>
       {imageLoading && <p className="text-sm text-slate-500">Đang xử lý ảnh...</p>}
@@ -162,9 +161,7 @@ export default function ProductForm({ initial, onSubmit, onCancel }: Props) {
         <select
           className="w-full rounded border px-3 py-2"
           value={form.status}
-          onChange={(e) =>
-            setForm({ ...form, status: e.target.value as Product["status"] })
-          }
+          onChange={(e) => setForm({ ...form, status: e.target.value as Product["status"] })}
         >
           <option value="ACTIVE">ACTIVE</option>
           <option value="INACTIVE">INACTIVE</option>
