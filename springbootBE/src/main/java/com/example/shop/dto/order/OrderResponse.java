@@ -14,6 +14,7 @@ import java.util.List;
 public class OrderResponse {
 
     private String id;
+    private Long orderCode;
     private String userId;
     private List<OrderItem> items;
     private String shippingAddress;

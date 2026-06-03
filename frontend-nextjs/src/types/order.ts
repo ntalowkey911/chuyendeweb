@@ -5,7 +5,7 @@ export type OrderStatus =
   | "COMPLETED"
   | "CANCELLED";
 
-export type PaymentMethod = "BANK_TRANSFER" | "CASH_ON_DELIVERY";
+export type PaymentMethod = "BANK_TRANSFER" | "CASH_ON_DELIVERY" | "VNPAY" | "PAYOS";
 
 export interface OrderItem {
   productId: string;

@@ -53,8 +53,10 @@ public class OrderService {
         }
 
         String userId = SecurityUtils.getCurrentUserId();
+        long orderCode = (System.currentTimeMillis() / 1000) % 10000000L * 100L + java.util.concurrent.ThreadLocalRandom.current().nextInt(100);
         Order order = Order.builder()
                 .userId(userId)
+                .orderCode(orderCode)
                 .items(orderItems)
                 .shippingAddress(request.getShippingAddress())
                 .phone(request.getPhone())
@@ -102,6 +104,7 @@ public class OrderService {
     private OrderResponse toResponse(Order order) {
         return OrderResponse.builder()
                 .id(order.getId())
+                .orderCode(order.getOrderCode())
                 .userId(order.getUserId())
                 .items(order.getItems())
                 .shippingAddress(order.getShippingAddress())

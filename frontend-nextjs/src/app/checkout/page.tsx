@@ -14,6 +14,7 @@ import type { PaymentMethod } from "@/types/order";
 import { formatPrice } from "@/utils/format";
 import { getPaymentMethodLabel } from "@/utils/catalog";
 import { addressApi, type Province, type District, type Ward } from "@/services/addressApi";
+import api from "@/services/api";
 
 const checkoutGifs = [
   "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcnJrbjZmcmZvMWViaDZrNDFrYml1cTNvNDJsZHp1MDBxcnJ4ZGprZyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/a3IWyhkEC0p32/giphy.gif",
@@ -100,14 +101,25 @@ function CheckoutContent() {
     }
 
     try {
-      await orderService.create({
+      const orderRes = await orderService.create({
         shippingAddress: finalAddress,
         phone: phone.trim(),
         paymentMethod,
       });
+
+      if (paymentMethod === "VNPAY") {
+        const payRes = await api.get(`/payment/create?orderId=${orderRes.data.id}`);
+        if (payRes.data.url) {
+          window.location.href = payRes.data.url;
+          return;
+        }
+      }
+
       router.push("/orders");
-    } catch {
-      setError("Đặt hàng thất bại. Vui lòng kiểm tra lại thông tin giao hàng.");
+    } catch (error: any) {
+      console.error("Order creation failed:", error);
+      const serverMessage = error.response?.data?.message || "Đặt hàng thất bại. Vui lòng kiểm tra lại thông tin giao hàng.";
+      setError(serverMessage);
     } finally {
       setLoading(false);
     }
@@ -159,9 +171,9 @@ function CheckoutContent() {
                       <button
                         type="button"
                         onClick={() => setUseSavedAddress(!useSavedAddress)}
-                        className="text-sm font-bold text-primary hover:underline"
+                        className="text-sm font-bold text-primary hover:underline transition-all duration-200"
                       >
-                        {useSavedAddress ? "Nhập địa chỉ mới" : "Dùng địa chỉ đã lưu"}
+                        {useSavedAddress ? "Đổi địa chỉ" : "Dùng địa chỉ mặc định"}
                       </button>
                     )}
                   </div>
@@ -170,7 +182,7 @@ function CheckoutContent() {
                     <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
                       <p className="font-medium text-slate-800">{user.address}</p>
                       <p className="mt-1 text-sm text-slate-500">
-                        (Địa chỉ này được lấy từ Hồ sơ của bạn)
+                        (Địa chỉ mặc định của tài khoản)
                       </p>
                     </div>
                   ) : (
@@ -240,7 +252,7 @@ function CheckoutContent() {
                     Phương thức thanh toán
                   </p>
                   <div className="mt-4 space-y-3">
-                    {(["BANK_TRANSFER", "CASH_ON_DELIVERY"] as PaymentMethod[]).map((method) => (
+                    {(["BANK_TRANSFER", "CASH_ON_DELIVERY", "VNPAY"] as PaymentMethod[]).map((method) => (
                       <label
                         key={method}
                         className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 p-4"
@@ -257,6 +269,10 @@ function CheckoutContent() {
                           {method === "BANK_TRANSFER" ? (
                             <p className="mt-1 text-sm text-slate-500">
                               STK BIDV: <span className="font-bold text-slate-800">0832110810</span>
+                            </p>
+                          ) : method === "VNPAY" ? (
+                            <p className="mt-1 text-sm text-slate-500">
+                              Thanh toán trực tuyến qua cổng VNPay (Hỗ trợ ATM nội địa, QR Code, Thẻ quốc tế).
                             </p>
                           ) : (
                             <p className="mt-1 text-sm text-slate-500">Thanh toán tiền mặt khi nhận hàng.</p>

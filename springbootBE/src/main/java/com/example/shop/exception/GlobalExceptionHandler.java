@@ -22,6 +22,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BadRequestException.class)
     public ResponseEntity<ApiError> handleBadRequest(BadRequestException ex) {
+        System.err.println("BadRequestException: " + ex.getMessage());
         return build(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
@@ -33,8 +34,9 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> handleValidation(MethodArgumentNotValidException ex) {
         String message = ex.getBindingResult().getFieldErrors().stream()
-                .map(FieldError::getDefaultMessage)
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
                 .collect(Collectors.joining(", "));
+        System.err.println("Validation failed: " + message);
         return build(HttpStatus.BAD_REQUEST, message);
     }
 

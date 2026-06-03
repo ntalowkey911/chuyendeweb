@@ -16,7 +16,7 @@ export const authService = {
   googleLogin: (credential: string) =>
     api.post<AuthResponse>("/auth/google", { credential }),
 
-  me: () => api.get<User>("/auth/me"),
+  me: () => api.get<User>("/users/me"),
 
   syncClerk: (data: { clerkId: string; email: string; fullName: string; avatarUrl: string; phone?: string; address?: string }, token: string) =>
     api.post<User>("/users/sync-clerk", data, {

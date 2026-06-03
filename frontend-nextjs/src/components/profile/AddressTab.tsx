@@ -7,6 +7,7 @@ import { addressApi, type Province, type District, type Ward } from "@/services/
 export default function AddressTab() {
   const { user, isLoaded } = useUser();
   const currentAddress = (user?.unsafeMetadata?.address as string) || "";
+  const currentPhone = (user?.unsafeMetadata?.phone as string) || "";
   
   const [provinces, setProvinces] = useState<Province[]>([]);
   const [districts, setDistricts] = useState<District[]>([]);
@@ -15,9 +16,16 @@ export default function AddressTab() {
   const [selectedDistrictCode, setSelectedDistrictCode] = useState<number | "">("");
   const [selectedWardCode, setSelectedWardCode] = useState<number | "">("");
   const [street, setStreet] = useState("");
+  const [phoneInput, setPhoneInput] = useState("");
 
   const [saving, setSaving] = useState(false);
   const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setPhoneInput((user.unsafeMetadata?.phone as string) || "");
+    }
+  }, [user]);
 
   useEffect(() => {
     addressApi.getProvinces().then(setProvinces);
@@ -47,16 +55,23 @@ export default function AddressTab() {
     e.preventDefault();
     if (!user) return;
 
-    const p = provinces.find((x) => x.code === Number(selectedProvinceCode))?.name;
-    const d = districts.find((x) => x.code === Number(selectedDistrictCode))?.name;
-    const w = wards.find((x) => x.code === Number(selectedWardCode))?.name;
+    let finalAddress = currentAddress;
+    const hasAddressInput = selectedProvinceCode || selectedDistrictCode || selectedWardCode || street.trim();
 
-    if (!p || !d || !w || !street.trim()) {
-      alert("Vui lòng nhập đầy đủ địa chỉ giao hàng.");
+    if (hasAddressInput) {
+      const p = provinces.find((x) => x.code === Number(selectedProvinceCode))?.name;
+      const d = districts.find((x) => x.code === Number(selectedDistrictCode))?.name;
+      const w = wards.find((x) => x.code === Number(selectedWardCode))?.name;
+
+      if (!p || !d || !w || !street.trim()) {
+        alert("Vui lòng nhập đầy đủ các trường địa chỉ (Tỉnh/Thành, Quận/Huyện, Phường/Xã và Số nhà).");
+        return;
+      }
+      finalAddress = `${street.trim()}, ${w}, ${d}, ${p}`;
+    } else if (!currentAddress && !phoneInput.trim()) {
+      alert("Vui lòng nhập địa chỉ hoặc số điện thoại.");
       return;
     }
-
-    const finalAddress = `${street.trim()}, ${w}, ${d}, ${p}`;
 
     setSaving(true);
     setSuccess(false);
@@ -65,6 +80,7 @@ export default function AddressTab() {
         unsafeMetadata: {
           ...user.unsafeMetadata,
           address: finalAddress,
+          phone: phoneInput.trim(),
         },
       });
       setSuccess(true);
@@ -94,16 +110,40 @@ export default function AddressTab() {
       </div>
 
       <form onSubmit={handleSave} className="max-w-xl space-y-4">
-        {currentAddress && (
-          <div className="mb-6 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4">
-            <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-600">
-              Địa chỉ hiện tại
-            </p>
-            <p className="mt-1 font-semibold text-slate-800">{currentAddress}</p>
+        {(currentAddress || currentPhone) && (
+          <div className="mb-6 rounded-2xl border border-emerald-100 bg-emerald-50/50 p-4 space-y-3">
+            {currentAddress && (
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-600">
+                  Địa chỉ mặc định
+                </p>
+                <p className="mt-1 font-semibold text-slate-800">{currentAddress}</p>
+              </div>
+            )}
+            {currentPhone && (
+              <div>
+                <p className="text-xs font-black uppercase tracking-[0.22em] text-emerald-600">
+                  Số điện thoại mặc định
+                </p>
+                <p className="mt-1 font-semibold text-slate-800">{currentPhone}</p>
+              </div>
+            )}
           </div>
         )}
 
+        <div className="space-y-2">
+          <label className="text-sm font-semibold text-slate-700">Số điện thoại mặc định</label>
+          <input
+            type="tel"
+            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 text-sm outline-none focus:border-primary"
+            placeholder="Nhập số điện thoại mặc định..."
+            value={phoneInput}
+            onChange={(e) => setPhoneInput(e.target.value)}
+          />
+        </div>
+
         <div className="space-y-4 rounded-[1.5rem] border border-slate-200 p-5">
+          <p className="text-sm font-bold text-slate-800 mb-2">Cập nhật địa chỉ mặc định</p>
           <div className="grid gap-4 md:grid-cols-3">
             <div>
               <label className="mb-1 block text-sm font-semibold text-slate-700">Tỉnh/Thành</label>
@@ -111,7 +151,6 @@ export default function AddressTab() {
                 value={selectedProvinceCode}
                 onChange={(e) => setSelectedProvinceCode(e.target.value ? Number(e.target.value) : "")}
                 className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-primary"
-                required
               >
                 <option value="">Chọn Tỉnh/Thành</option>
                 {provinces.map((p) => (
@@ -125,7 +164,6 @@ export default function AddressTab() {
                 value={selectedDistrictCode}
                 onChange={(e) => setSelectedDistrictCode(e.target.value ? Number(e.target.value) : "")}
                 className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-primary disabled:bg-slate-50"
-                required
                 disabled={!selectedProvinceCode}
               >
                 <option value="">Chọn Quận/Huyện</option>
@@ -140,7 +178,6 @@ export default function AddressTab() {
                 value={selectedWardCode}
                 onChange={(e) => setSelectedWardCode(e.target.value ? Number(e.target.value) : "")}
                 className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm outline-none focus:border-primary disabled:bg-slate-50"
-                required
                 disabled={!selectedDistrictCode}
               >
                 <option value="">Chọn Phường/Xã</option>
@@ -157,7 +194,6 @@ export default function AddressTab() {
               placeholder="Ví dụ: 123 Đường ABC..."
               value={street}
               onChange={(e) => setStreet(e.target.value)}
-              required
             />
           </div>
         </div>
@@ -168,7 +204,7 @@ export default function AddressTab() {
             disabled={saving}
             className="rounded-full bg-primary px-6 py-2.5 text-sm font-bold text-white transition hover:bg-primary/90 disabled:opacity-50"
           >
-            {saving ? "Đang lưu..." : "Lưu địa chỉ"}
+            {saving ? "Đang lưu..." : "Lưu thay đổi"}
           </button>
           
           {success && (

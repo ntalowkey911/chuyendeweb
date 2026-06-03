@@ -64,4 +64,8 @@ public class UserController {
 
         return ResponseEntity.ok(user);
     }
+    @GetMapping("/me")
+    public ResponseEntity<?> getMe() {
+        return ResponseEntity.ok(com.example.shop.security.SecurityUtils.getCurrentUser().getUser());
+    }
 }

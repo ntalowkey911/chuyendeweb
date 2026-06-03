@@ -16,5 +16,7 @@ export const SORT_OPTIONS = [
 export function getPaymentMethodLabel(value: string) {
   if (value === "BANK_TRANSFER") return "Chuyển khoản BIDV";
   if (value === "CASH_ON_DELIVERY") return "Thanh toán trực tiếp";
+  if (value === "PAYOS") return "Thanh toán qua mã QR (PayOS)";
+  if (value === "VNPAY") return "Thanh toán qua VNPay";
   return value;
 }

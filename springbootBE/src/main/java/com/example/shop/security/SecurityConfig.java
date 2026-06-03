@@ -29,6 +29,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products", "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/categories", "/api/categories/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/payment/vnpay_return").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

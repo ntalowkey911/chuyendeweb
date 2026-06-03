@@ -1,16 +1,27 @@
 import axios from "axios";
 
 const defaultBaseURL =
-  typeof window === "undefined" ? "http://127.0.0.1:8080/api" : "/api";
+  typeof window === "undefined" ? " http://192.168.1.7:3000" : "/api";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || defaultBaseURL,
   headers: { "Content-Type": "application/json" },
 });
 
-api.interceptors.request.use((config) => {
+api.interceptors.request.use(async (config) => {
   if (typeof window !== "undefined") {
-    const token = localStorage.getItem("token");
+    let token = null;
+    
+    if ((window as any).Clerk?.session) {
+      try {
+        token = await (window as any).Clerk.session.getToken();
+      } catch (e) {}
+    }
+
+    if (!token) {
+      token = localStorage.getItem("token");
+    }
+
     if (token && !config.headers.Authorization) {
       config.headers.Authorization = `Bearer ${token}`;
     }

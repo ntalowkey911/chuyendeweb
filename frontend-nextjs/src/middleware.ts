@@ -1,4 +1,5 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
+import { NextResponse } from 'next/server'
 
 const isPublicRoute = createRouteMatcher([
   '/login(.*)', 
@@ -8,10 +9,18 @@ const isPublicRoute = createRouteMatcher([
   '/product(.*)',
   '/products(.*)',
   '/api(.*)',
-  '/sso-callback(.*)'
+  '/sso-callback(.*)',
+  '/payment(.*)'
 ])
 
 export default clerkMiddleware(async (auth, request) => {
+  const { userId } = await auth();
+
+  // Nếu đã đăng nhập mà cố vào trang login/register thì đá về trang chủ
+  if (userId && (request.nextUrl.pathname.startsWith('/login') || request.nextUrl.pathname.startsWith('/register'))) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+
   if (!isPublicRoute(request)) {
     await auth.protect()
   }

@@ -23,6 +23,8 @@ public class Order {
     @Id
     private String id;
 
+    private Long orderCode;
+
     private String userId;
 
     @Builder.Default
