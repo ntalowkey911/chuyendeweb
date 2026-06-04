@@ -1,5 +1,6 @@
 package com.example.shop.service;
 
+import com.example.shop.dto.PageResponse;
 import com.example.shop.dto.admin.AdminOverviewResponse;
 import com.example.shop.dto.admin.CustomerStatsResponse;
 import com.example.shop.dto.admin.DashboardResponse;
@@ -57,12 +58,12 @@ public class AdminService {
                 .toList();
     }
 
-    public List<ProductResponse> getAllProducts() {
-        return productService.getAll();
+    public PageResponse<ProductResponse> getAllProducts(int page, int size) {
+        return productService.getAllAdmin(page, size);
     }
 
-    public List<OrderResponse> getAllOrders() {
-        return orderService.getAllOrders();
+    public PageResponse<OrderResponse> getAllOrders(int page, int size) {
+        return orderService.getAllOrders(page, size);
     }
 
     public AdminOverviewResponse getOverview() {

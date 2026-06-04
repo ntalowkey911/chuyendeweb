@@ -1,5 +1,8 @@
 import api from "./api";
 import type { AdminOverview } from "@/types/admin";
+import type { Product } from "@/types/product";
+import type { Category } from "@/types/category";
+import type { Promotion, PromotionRequest } from "@/types/promotion";
 
 const CACHE_KEY = "admin-overview-cache";
 const CACHE_TTL = 30_000;
@@ -39,6 +42,10 @@ function writeCache(data: AdminOverview) {
 }
 
 export const adminService = {
+  getProducts(page = 0, size = 10) {
+    return api.get<{ content: Product[]; totalPages: number }>(`/admin/products?page=${page}&size=${size}`);
+  },
+  
   async getOverview(force = false) {
     if (!force) {
       if (memoryCache && Date.now() - memoryCache.updatedAt <= CACHE_TTL) {
@@ -71,4 +78,21 @@ export const adminService = {
       body: JSON.stringify({ productId }),
     });
   },
+
+  deleteCategory(id: string) {
+    return api.delete(`/admin/categories/${id}`);
+  },
+
+  getPromotions() {
+    return api.get<Promotion[]>("/admin/promotions");
+  },
+  createPromotion(data: PromotionRequest) {
+    return api.post<Promotion>("/admin/promotions", data);
+  },
+  updatePromotion(id: string, data: PromotionRequest) {
+    return api.put<Promotion>(`/admin/promotions/${id}`, data);
+  },
+  deletePromotion(id: string) {
+    return api.delete(`/admin/promotions/${id}`);
+  }
 };

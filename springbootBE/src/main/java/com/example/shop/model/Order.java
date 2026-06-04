@@ -39,6 +39,11 @@ public class Order {
 
     private BigDecimal totalAmount;
 
+    private String promotionCode;
+
+    @Builder.Default
+    private BigDecimal discountAmount = BigDecimal.ZERO;
+
     @Builder.Default
     private OrderStatus status = OrderStatus.PENDING;
 

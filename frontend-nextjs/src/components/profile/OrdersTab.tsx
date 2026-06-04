@@ -5,6 +5,7 @@ import { orderService } from "@/services/orderService";
 import type { Order } from "@/types/order";
 import { formatPrice } from "@/utils/format";
 import { getPaymentMethodLabel } from "@/utils/catalog";
+import { OrderTrackingBar } from "./OrderTrackingBar";
 
 const statusLabels: Record<string, string> = {
   PENDING: "Chờ xác nhận",
@@ -61,6 +62,10 @@ export default function OrdersTab() {
                 {statusLabels[order.status] || order.status}
               </span>
             </div>
+
+            <div className="mt-6 mb-4">
+              <OrderTrackingBar status={order.status} />
+            </div>
             
             <div className="mt-4 border-t border-slate-100 pt-4">
               <p className="text-sm text-slate-600"><span className="font-medium text-slate-700">Giao đến:</span> {order.shippingAddress}</p>
@@ -79,9 +84,30 @@ export default function OrdersTab() {
               ))}
             </ul>
 
-            <div className="mt-4 flex justify-between border-t border-slate-100 pt-4">
-              <span className="font-semibold text-slate-600">Tổng thanh toán</span>
-              <span className="text-lg font-black text-primary">{formatPrice(order.totalAmount)}</span>
+            <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4">
+              {order.discountAmount && order.discountAmount > 0 ? (
+                <>
+                  <div className="flex justify-between text-sm text-slate-500">
+                    <span>Tạm tính</span>
+                    <span>{formatPrice(order.totalAmount)}</span>
+                  </div>
+                  <div className="flex justify-between text-sm font-semibold text-emerald-600">
+                    <span>Giảm giá ({order.promotionCode})</span>
+                    <span>-{formatPrice(order.discountAmount)}</span>
+                  </div>
+                  <div className="flex justify-between pt-2">
+                    <span className="font-semibold text-slate-600">Tổng thanh toán</span>
+                    <span className="text-lg font-black text-primary">
+                      {formatPrice(Math.max(0, order.totalAmount - order.discountAmount))}
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className="flex justify-between">
+                  <span className="font-semibold text-slate-600">Tổng thanh toán</span>
+                  <span className="text-lg font-black text-primary">{formatPrice(order.totalAmount)}</span>
+                </div>
+              )}
             </div>
           </div>
         ))}

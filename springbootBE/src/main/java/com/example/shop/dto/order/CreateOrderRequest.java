@@ -14,6 +14,8 @@ public class CreateOrderRequest {
     @NotBlank
     private String phone;
 
-    @NotNull
+    @NotNull(message = "Payment method is required")
     private PaymentMethod paymentMethod;
+
+    private String promotionCode;
 }

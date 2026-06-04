@@ -22,6 +22,15 @@ export interface Order {
   phone: string;
   paymentMethod: PaymentMethod;
   totalAmount: number;
+  promotionCode?: string;
+  discountAmount?: number;
   status: OrderStatus;
   createdAt?: string;
+}
+
+export interface CreateOrderRequest {
+  shippingAddress: string;
+  phone: string;
+  paymentMethod: PaymentMethod;
+  promotionCode?: string;
 }

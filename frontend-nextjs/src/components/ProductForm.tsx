@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Category } from "@/types/category";
 import type { Product } from "@/types/product";
+import api from "@/services/api";
 
 interface Props {
   categories: Category[];
@@ -58,7 +59,17 @@ export default function ProductForm({ categories, initial, onSubmit, onCancel }:
     if (!files?.length) return;
     setImageLoading(true);
     try {
-      const images = await Promise.all(Array.from(files).map((file) => resizeImage(file)));
+      const images = await Promise.all(
+        Array.from(files).map(async (file) => {
+          const blob = await resizeImageToBlob(file);
+          const formData = new FormData();
+          formData.append("file", blob, file.name);
+          const { data } = await api.post("/upload", formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+          return data.url;
+        })
+      );
       setForm((current) => ({
         ...current,
         imageUrl: images[0] || current.imageUrl,
@@ -185,7 +196,7 @@ export default function ProductForm({ categories, initial, onSubmit, onCancel }:
   );
 }
 
-function resizeImage(file: File): Promise<string> {
+function resizeImageToBlob(file: File): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(reader.error);
@@ -203,7 +214,10 @@ function resizeImage(file: File): Promise<string> {
           return;
         }
         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-        resolve(canvas.toDataURL("image/jpeg", 0.76));
+        canvas.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("Lỗi khi chuyển đổi ảnh"));
+        }, "image/jpeg", 0.76);
       };
       image.src = String(reader.result);
     };

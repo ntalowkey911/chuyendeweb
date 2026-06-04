@@ -1,5 +1,7 @@
 import api from "./api";
-import type { Order, OrderStatus, PaymentMethod } from "@/types/order";
+import type { CreateOrderRequest, Order, OrderStatus } from "@/types/order";
+import type { PageResponse } from "@/types/pagination";
+import type { ValidatePromotionResponse } from "@/types/promotion";
 import type { Role } from "@/types/user";
 
 export interface DashboardStats {
@@ -23,13 +25,13 @@ export interface CustomerStats {
 }
 
 export const orderService = {
-  create: (data: { shippingAddress: string; phone: string; paymentMethod: PaymentMethod }) =>
+  create: (data: CreateOrderRequest) =>
     api.post<Order>("/orders", data),
   myOrders: () => api.get<Order[]>("/orders/my-orders"),
   getById: (id: string) => api.get<Order>(`/orders/${id}`),
-  adminOrders: () => api.get<Order[]>("/admin/orders"),
+  adminOrders: (page = 0, size = 10) => api.get<PageResponse<Order>>(`/admin/orders?page=${page}&size=${size}`),
   adminCustomers: () => api.get<CustomerStats[]>("/admin/customers"),
-  updateStatus: (id: string, status: OrderStatus) =>
-    api.put<Order>(`/admin/orders/${id}/status`, { status }),
+  updateOrderStatus: (id: string, status: OrderStatus) => api.put<Order>(`/admin/orders/${id}/status`, { status }),
+  validatePromotion: (code: string) => api.get<ValidatePromotionResponse>(`/promotions/validate?code=${encodeURIComponent(code)}`),
   dashboard: () => api.get<DashboardStats>("/admin/dashboard"),
 };

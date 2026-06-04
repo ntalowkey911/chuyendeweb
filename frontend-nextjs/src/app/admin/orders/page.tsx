@@ -20,15 +20,19 @@ const statusLabels: Record<OrderStatus, string> = {
 
 function AdminOrdersContent() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [page, setPage] = useState(0);
+  const [totalPages, setTotalPages] = useState(1);
+  const size = 10;
 
-  const load = async () => {
-    const response = await orderService.adminOrders();
-    setOrders(response.data);
+  const load = async (pageIndex: number) => {
+    const response = await orderService.adminOrders(pageIndex, size);
+    setOrders(response.data.content);
+    setTotalPages(response.data.totalPages || 1);
   };
 
   useEffect(() => {
-    void load();
-  }, []);
+    void load(page);
+  }, [page]);
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -48,14 +52,21 @@ function AdminOrdersContent() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <span className="font-mono text-sm text-slate-500">#{order.id.slice(-8)}</span>
-                    <p className="mt-2 text-lg font-black text-slate-900">{formatPrice(order.totalAmount)}</p>
+                    <div className="mt-2">
+                      <p className="text-lg font-black text-slate-900">{formatPrice(Math.max(0, order.totalAmount - (order.discountAmount || 0)))}</p>
+                      {order.discountAmount && order.discountAmount > 0 ? (
+                        <p className="text-xs font-semibold text-emerald-600 mt-1">
+                          Đã giảm {formatPrice(order.discountAmount)} (Mã: {order.promotionCode})
+                        </p>
+                      ) : null}
+                    </div>
                   </div>
                   <select
                     className="rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm font-semibold"
                     value={order.status}
                     onChange={async (event) => {
-                      await orderService.updateStatus(order.id, event.target.value as OrderStatus);
-                      await load();
+                      await orderService.updateOrderStatus(order.id, event.target.value as OrderStatus);
+                      await load(page);
                     }}
                   >
                     {Object.entries(statusLabels).map(([value, label]) => (
@@ -82,6 +93,26 @@ function AdminOrdersContent() {
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <button
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 disabled:opacity-50 hover:bg-slate-50"
+            >
+              Trang trước
+            </button>
+            <span className="text-sm font-semibold text-slate-600">
+              Trang {page + 1} / {totalPages}
+            </span>
+            <button
+              onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
+              disabled={page >= totalPages - 1}
+              className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 disabled:opacity-50 hover:bg-slate-50"
+            >
+              Trang sau
+            </button>
           </div>
         </Container>
       </main>

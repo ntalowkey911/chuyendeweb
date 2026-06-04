@@ -21,6 +21,8 @@ public class OrderResponse {
     private String phone;
     private com.example.shop.model.PaymentMethod paymentMethod;
     private BigDecimal totalAmount;
+    private String promotionCode;
+    private BigDecimal discountAmount;
     private OrderStatus status;
     private Instant createdAt;
 }

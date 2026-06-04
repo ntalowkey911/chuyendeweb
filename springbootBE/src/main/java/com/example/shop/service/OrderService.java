@@ -1,5 +1,6 @@
 package com.example.shop.service;
 
+import com.example.shop.dto.PageResponse;
 import com.example.shop.dto.order.CreateOrderRequest;
 import com.example.shop.dto.order.OrderResponse;
 import com.example.shop.dto.order.UpdateOrderStatusRequest;
@@ -7,8 +8,13 @@ import com.example.shop.exception.BadRequestException;
 import com.example.shop.exception.ResourceNotFoundException;
 import com.example.shop.model.*;
 import com.example.shop.repository.OrderRepository;
+import com.example.shop.dto.promotion.ValidatePromotionResponse;
 import com.example.shop.security.SecurityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,6 +29,7 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartService cartService;
     private final ProductService productService;
+    private final PromotionService promotionService;
 
     public OrderResponse createOrder(CreateOrderRequest request) {
         Cart cart = cartService.getOrCreateCart();
@@ -54,6 +61,17 @@ public class OrderService {
 
         String userId = SecurityUtils.getCurrentUserId();
         long orderCode = (System.currentTimeMillis() / 1000) % 10000000L * 100L + java.util.concurrent.ThreadLocalRandom.current().nextInt(100);
+        
+        BigDecimal discountAmount = BigDecimal.ZERO;
+        if (request.getPromotionCode() != null && !request.getPromotionCode().isBlank()) {
+            ValidatePromotionResponse promotionValidation = promotionService.validateAndCalculate(request.getPromotionCode(), cart.getTotalAmount());
+            if (!promotionValidation.isValid()) {
+                throw new BadRequestException(promotionValidation.getMessage());
+            }
+            discountAmount = promotionValidation.getDiscountAmount();
+            promotionService.incrementUsedCount(request.getPromotionCode());
+        }
+
         Order order = Order.builder()
                 .userId(userId)
                 .orderCode(orderCode)
@@ -62,6 +80,8 @@ public class OrderService {
                 .phone(request.getPhone())
                 .paymentMethod(request.getPaymentMethod())
                 .totalAmount(cart.getTotalAmount())
+                .promotionCode(request.getPromotionCode())
+                .discountAmount(discountAmount)
                 .status(OrderStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
@@ -86,8 +106,19 @@ public class OrderService {
         return toResponse(order);
     }
 
-    public List<OrderResponse> getAllOrders() {
-        return orderRepository.findAll().stream().map(this::toResponse).toList();
+    public PageResponse<OrderResponse> getAllOrders(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+        Page<Order> orderPage = orderRepository.findAll(pageable);
+        List<OrderResponse> responses = orderPage.getContent().stream().map(this::toResponse).toList();
+        
+        return PageResponse.<OrderResponse>builder()
+                .content(responses)
+                .pageNo(orderPage.getNumber())
+                .pageSize(orderPage.getSize())
+                .totalElements(orderPage.getTotalElements())
+                .totalPages(orderPage.getTotalPages())
+                .last(orderPage.isLast())
+                .build();
     }
 
     public OrderResponse updateStatus(String id, UpdateOrderStatusRequest request) {
@@ -111,6 +142,8 @@ public class OrderService {
                 .phone(order.getPhone())
                 .paymentMethod(order.getPaymentMethod())
                 .totalAmount(order.getTotalAmount())
+                .promotionCode(order.getPromotionCode())
+                .discountAmount(order.getDiscountAmount())
                 .status(order.getStatus())
                 .createdAt(order.getCreatedAt())
                 .build();
