@@ -1,5 +1,7 @@
 package com.example.shop.service;
 
+import com.example.shop.dto.PageResponse;
+
 import com.example.shop.dto.product.ProductRequest;
 import com.example.shop.dto.product.ProductResponse;
 import com.example.shop.exception.ResourceNotFoundException;
@@ -9,6 +11,8 @@ import com.example.shop.model.ProductStatus;
 import com.example.shop.repository.CategoryRepository;
 import com.example.shop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -32,6 +36,19 @@ public class ProductService {
 
     public List<ProductResponse> getAll() {
         return toResponses(productRepository.findAll());
+    }
+
+    public PageResponse<ProductResponse> getAllAdmin(int page, int size) {
+        Page<Product> productPage = productRepository.findAll(PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt")));
+        List<ProductResponse> responses = toResponses(productPage.getContent());
+        return PageResponse.<ProductResponse>builder()
+                .content(responses)
+                .pageNo(productPage.getNumber())
+                .pageSize(productPage.getSize())
+                .totalElements(productPage.getTotalElements())
+                .totalPages(productPage.getTotalPages())
+                .last(productPage.isLast())
+                .build();
     }
 
     public List<ProductResponse> getCatalog(

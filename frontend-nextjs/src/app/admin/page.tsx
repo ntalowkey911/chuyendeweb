@@ -22,6 +22,9 @@ const fallbackImage =
 function AdminContent() {
   const [overview, setOverview] = useState<AdminOverview | null>(null);
   const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [productPage, setProductPage] = useState(0);
+  const [productTotalPages, setProductTotalPages] = useState(1);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [showProductForm, setShowProductForm] = useState(false);
   const [editingCategory, setEditingCategory] = useState<Category | null>(null);
@@ -35,6 +38,12 @@ function AdminContent() {
     setOverview(data);
   };
 
+  const loadProducts = async (page: number) => {
+    const res = await adminService.getProducts(page, 10);
+    setProducts(res.data.content);
+    setProductTotalPages(res.data.totalPages || 1);
+  };
+
   useEffect(() => {
     void (async () => {
       try {
@@ -45,7 +54,10 @@ function AdminContent() {
     })();
   }, []);
 
-  const products = overview?.products ?? [];
+  useEffect(() => {
+    void loadProducts(productPage);
+  }, [productPage]);
+
   const customers = overview?.customers ?? [];
   const categories = overview?.categories ?? [];
   const stats = overview?.stats ?? null;
@@ -66,6 +78,7 @@ function AdminContent() {
     await Promise.all([
       adminService.revalidateStorefront(productId),
       loadOverview(true),
+      loadProducts(productPage),
     ]);
   };
 
@@ -120,12 +133,30 @@ function AdminContent() {
                 Gọn dữ liệu hơn, vào nhanh hơn, chỉnh xong là ngoài shop cập nhật sớm hơn.
               </p>
             </div>
-            <Link
-              href="/admin/orders"
-              className="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white hover:bg-primary/90"
-            >
-              Xem đơn hàng
-            </Link>
+              <Link
+                href="/admin/promotions"
+                className="rounded-full bg-orange-500 px-5 py-3 text-sm font-bold text-white hover:bg-orange-600"
+              >
+                Mã giảm giá
+              </Link>
+              <Link
+                href="/admin/orders"
+                className="rounded-full bg-primary px-5 py-3 text-sm font-bold text-white hover:bg-primary/90"
+              >
+                Xem đơn hàng
+              </Link>
+              <Link
+                href="/admin/news"
+                className="rounded-full bg-blue-500 px-5 py-3 text-sm font-bold text-white hover:bg-blue-600"
+              >
+                Tin tức
+              </Link>
+              <Link
+                href="/admin/contacts"
+                className="rounded-full bg-purple-500 px-5 py-3 text-sm font-bold text-white hover:bg-purple-600"
+              >
+                Liên hệ
+              </Link>
           </div>
 
           {stats && (
@@ -350,6 +381,26 @@ function AdminContent() {
                   })}
                 </tbody>
               </table>
+            </div>
+
+            <div className="mt-8 flex items-center justify-center gap-4">
+              <button
+                onClick={() => setProductPage((p) => Math.max(0, p - 1))}
+                disabled={productPage === 0}
+                className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 disabled:opacity-50 hover:bg-slate-50"
+              >
+                Trang trước
+              </button>
+              <span className="text-sm font-semibold text-slate-600">
+                Trang {productPage + 1} / {productTotalPages}
+              </span>
+              <button
+                onClick={() => setProductPage((p) => Math.min(productTotalPages - 1, p + 1))}
+                disabled={productPage >= productTotalPages - 1}
+                className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold text-slate-700 disabled:opacity-50 hover:bg-slate-50"
+              >
+                Trang sau
+              </button>
             </div>
           </section>
 

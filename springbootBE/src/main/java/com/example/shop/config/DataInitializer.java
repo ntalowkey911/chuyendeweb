@@ -2,9 +2,12 @@ package com.example.shop.config;
 
 import com.example.shop.model.Product;
 import com.example.shop.model.ProductStatus;
+import com.example.shop.model.Promotion;
+import com.example.shop.model.DiscountType;
 import com.example.shop.model.Role;
 import com.example.shop.model.User;
 import com.example.shop.repository.ProductRepository;
+import com.example.shop.repository.PromotionRepository;
 import com.example.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -21,6 +24,7 @@ public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
+    private final PromotionRepository promotionRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -107,6 +111,50 @@ public class DataInitializer implements CommandLineRunner {
                     product("Rong biển khô", "Rong biển sấy khô tiện dùng nấu canh, cuộn cơm hoặc ăn vặt.", "nam-va-rong-bien", 76000, 140, now,
                             "https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=640&q=70",
                             "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=640&q=70")
+            ));
+        }
+
+        if (promotionRepository.count() == 0) {
+            promotionRepository.saveAll(List.of(
+                    Promotion.builder()
+                            .code("WELCOME10")
+                            .description("Giảm 10% cho đơn hàng bất kỳ")
+                            .discountType(DiscountType.PERCENTAGE)
+                            .discountValue(BigDecimal.valueOf(10))
+                            .isActive(true)
+                            .usedCount(0)
+                            .createdAt(Instant.now())
+                            .build(),
+                    Promotion.builder()
+                            .code("FREESHIP50")
+                            .description("Giảm 50k cho đơn từ 500k")
+                            .discountType(DiscountType.FIXED_AMOUNT)
+                            .discountValue(BigDecimal.valueOf(50000))
+                            .minOrderValue(BigDecimal.valueOf(500000))
+                            .isActive(true)
+                            .usedCount(0)
+                            .createdAt(Instant.now())
+                            .build(),
+                    Promotion.builder()
+                            .code("SUMMER20")
+                            .description("Giảm 20% tối đa 100k")
+                            .discountType(DiscountType.PERCENTAGE)
+                            .discountValue(BigDecimal.valueOf(20))
+                            .maxDiscount(BigDecimal.valueOf(100000))
+                            .isActive(true)
+                            .usedCount(0)
+                            .createdAt(Instant.now())
+                            .build(),
+                    Promotion.builder()
+                            .code("FLASH500")
+                            .description("Giảm 500k (Chỉ 5 lượt)")
+                            .discountType(DiscountType.FIXED_AMOUNT)
+                            .discountValue(BigDecimal.valueOf(500000))
+                            .usageLimit(5)
+                            .isActive(true)
+                            .usedCount(0)
+                            .createdAt(Instant.now())
+                            .build()
             ));
         }
     }

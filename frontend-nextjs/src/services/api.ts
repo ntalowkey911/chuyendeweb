@@ -22,7 +22,7 @@ api.interceptors.request.use(async (config) => {
       token = localStorage.getItem("token");
     }
 
-    if (token && !config.headers.Authorization) {
+    if (token && !config.headers.Authorization && !config.url?.includes('/payment/vnpay_return')) {
       config.headers.Authorization = `Bearer ${token}`;
     }
   }
