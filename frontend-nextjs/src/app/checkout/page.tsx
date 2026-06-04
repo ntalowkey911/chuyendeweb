@@ -42,6 +42,11 @@ function CheckoutContent() {
   const [selectedWardCode, setSelectedWardCode] = useState<number | "">("");
   const [street, setStreet] = useState("");
 
+  const [promotionCode, setPromotionCode] = useState("");
+  const [discountAmount, setDiscountAmount] = useState(0);
+  const [promotionMessage, setPromotionMessage] = useState("");
+  const [validatingPromo, setValidatingPromo] = useState(false);
+
   useEffect(() => {
     void fetchCart();
     void fetchMe();
@@ -78,6 +83,33 @@ function CheckoutContent() {
     setSelectedWardCode("");
   }, [selectedDistrictCode]);
 
+  const handleApplyPromo = async () => {
+    if (!promotionCode.trim()) {
+      setDiscountAmount(0);
+      setPromotionMessage("");
+      return;
+    }
+    setValidatingPromo(true);
+    setPromotionMessage("");
+    try {
+      const res = await orderService.validatePromotion(promotionCode);
+      const isCodeValid = res.data.isValid ?? (res.data as any).valid;
+      
+      if (isCodeValid) {
+        setDiscountAmount(res.data.discountAmount);
+        setPromotionMessage(`Thành công: Đã giảm ${formatPrice(res.data.discountAmount)}`);
+      } else {
+        setDiscountAmount(0);
+        setPromotionMessage(`Lỗi: ${res.data.message}`);
+      }
+    } catch (err: any) {
+      setDiscountAmount(0);
+      setPromotionMessage(err.response?.data?.message || "Không thể xác thực mã giảm giá");
+    } finally {
+      setValidatingPromo(false);
+    }
+  };
+
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setLoading(true);
@@ -105,6 +137,7 @@ function CheckoutContent() {
         shippingAddress: finalAddress,
         phone: phone.trim(),
         paymentMethod,
+        promotionCode: discountAmount > 0 ? promotionCode.trim() : undefined,
       });
 
       if (paymentMethod === "VNPAY") {
@@ -320,7 +353,32 @@ function CheckoutContent() {
                     </div>
                   ))}
                 </div>
-                <div className="mt-6 border-t border-white/70 pt-4">
+
+                <div className="mt-5 border-t border-white/70 pt-4">
+                  <div className="flex justify-between gap-2">
+                    <input
+                      className="h-10 w-full rounded-xl border border-white/70 bg-white/50 px-3 outline-none text-sm placeholder:text-slate-500 focus:border-primary"
+                      placeholder="Mã giảm giá"
+                      value={promotionCode}
+                      onChange={(e) => setPromotionCode(e.target.value.toUpperCase())}
+                    />
+                    <button
+                      type="button"
+                      disabled={validatingPromo || !promotionCode}
+                      onClick={handleApplyPromo}
+                      className="rounded-xl bg-slate-800 px-4 text-sm font-bold text-white hover:bg-slate-700 disabled:opacity-50"
+                    >
+                      Áp dụng
+                    </button>
+                  </div>
+                  {promotionMessage && (
+                    <p className={`mt-2 text-xs font-semibold ${discountAmount > 0 ? "text-emerald-600" : "text-red-600"}`}>
+                      {promotionMessage}
+                    </p>
+                  )}
+                </div>
+
+                <div className="mt-4 border-t border-white/70 pt-4">
                   <div className="flex justify-between text-sm text-slate-600">
                     <span>Số món</span>
                     <span>{cart?.items.length || 0}</span>
@@ -329,9 +387,15 @@ function CheckoutContent() {
                     <span>Thanh toán</span>
                     <span>{getPaymentMethodLabel(paymentMethod)}</span>
                   </div>
+                  {discountAmount > 0 && (
+                    <div className="mt-3 flex justify-between text-sm text-emerald-600 font-semibold">
+                      <span>Giảm giá</span>
+                      <span>-{formatPrice(discountAmount)}</span>
+                    </div>
+                  )}
                   <div className="mt-3 flex justify-between text-sm text-slate-600">
                     <span>Tổng thanh toán</span>
-                    <span className="font-black text-primary">{formatPrice(cart?.totalAmount || 0)}</span>
+                    <span className="font-black text-primary">{formatPrice(Math.max(0, (cart?.totalAmount || 0) - discountAmount))}</span>
                   </div>
                 </div>
               </aside>
