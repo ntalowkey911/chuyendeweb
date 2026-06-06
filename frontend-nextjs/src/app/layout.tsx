@@ -4,8 +4,8 @@ import AuthHydrate from "@/components/AuthHydrate";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Nông Sản Sấy",
-  description: "Shop nông sản sấy, hạt và thực phẩm khô gọn nhẹ cho gian bếp mỗi ngày.",
+  title: "FastBite - Món Ngon Giao Ngay",
+  description: "Trải nghiệm những món thức ăn nhanh hấp dẫn, gà rán giòn rụm và thức uống tươi mát.",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",

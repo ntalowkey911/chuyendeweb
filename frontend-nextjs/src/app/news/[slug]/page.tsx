@@ -22,7 +22,7 @@ export async function generateMetadata(
     const article = res.data;
     
     return {
-      title: `${article.title} - Nông Sản Sấy`,
+      title: `${article.title} - FastBite`,
       description: article.summary,
       openGraph: {
         images: article.imageUrl ? [article.imageUrl] : [],

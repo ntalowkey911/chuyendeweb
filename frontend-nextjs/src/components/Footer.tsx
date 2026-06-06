@@ -7,18 +7,19 @@ export function Footer() {
       <Container>
         <div className="grid gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
           <div className="space-y-4">
-            <Link href="/" className="text-2xl font-black tracking-tight text-[#ffd3c2]">
-              Nông Sản Sấy
+            <Link href="/" className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-[#ffd3c2] md:text-2xl">
+              <img src="/logo.png" alt="FastBite Logo" className="h-16 w-auto object-contain" />
+              FastBite
             </Link>
             <p className="max-w-md text-sm leading-7 text-slate-300">
-              Shop thực phẩm khô tối ưu cho việc mua nhanh, quản lý gọn và hiển thị tốt trên điện thoại lẫn desktop.
+              FastBite tự hào mang đến những bữa ăn nhanh, nóng hổi và ngon miệng. Cam kết nguyên liệu sạch, phục vụ chu đáo, giao hàng cực tốc độ.
             </p>
           </div>
 
           <div className="space-y-3 text-sm text-slate-300">
             <h4 className="font-bold uppercase tracking-wider text-white">Liên hệ</h4>
             <p>Hotline: 0900 000 001</p>
-            <p>Email: support@nongsansay.vn</p>
+            <p>Email: support@fastbite.vn</p>
             <p>Giờ mở cửa: 08:00 - 21:30</p>
           </div>
 
@@ -39,7 +40,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 border-t border-white/10 pt-5 text-center text-xs text-slate-400">
-          © 2026 Nông Sản Sấy. Next.js + Spring Boot.
+          © {new Date().getFullYear()} FastBite. All rights reserved.
         </div>
       </Container>
     </footer>

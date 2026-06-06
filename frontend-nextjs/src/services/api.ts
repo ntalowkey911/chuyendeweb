@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const defaultBaseURL =
-  typeof window === "undefined" ? " http://192.168.1.7:3000" : "/api";
+  typeof window === "undefined" ? "http://127.0.0.1:8080/api" : "/api";
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL || defaultBaseURL,

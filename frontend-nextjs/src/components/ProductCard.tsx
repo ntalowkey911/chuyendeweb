@@ -89,6 +89,11 @@ export function ProductCard({ product }: ProductCardProps) {
           quality={68}
           sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
           className="object-cover transition-transform duration-500 group-hover:scale-105"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.srcset = "";
+            target.src = fallbackImage;
+          }}
         />
         
         {/* Wishlist Button */}

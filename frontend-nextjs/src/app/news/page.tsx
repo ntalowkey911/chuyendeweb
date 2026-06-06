@@ -8,8 +8,8 @@ import type { Article } from "@/types/article";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Tin tức - Nông Sản Sấy",
-  description: "Cập nhật những tin tức, ưu đãi và mẹo hay mới nhất từ Nông Sản Sấy.",
+  title: "Tin tức - FastBite",
+  description: "Cập nhật những tin tức, ưu đãi và mẹo hay mới nhất từ FastBite.",
 };
 
 async function getArticles() {
@@ -35,7 +35,7 @@ export default async function NewsPage() {
               Tin tức & Góc chia sẻ
             </h1>
             <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600">
-              Cập nhật những câu chuyện, mẹo hay và thông tin khuyến mãi mới nhất từ Nông Sản Sấy
+              Cập nhật những câu chuyện, mẹo hay và thông tin khuyến mãi mới nhất từ FastBite
             </p>
           </div>
 

@@ -38,10 +38,10 @@ async function fetchStorefront<T>(
   if (!response.ok) {
     console.warn(`[Storefront] Request failed: ${response.status} for ${endpoint}`);
     // Prevent Vercel build from crashing if the backend is down or returns 401/500
-    if (path.startsWith("/products") && !path.includes("/", 10)) {
+    if (path === "/products" || path.startsWith("/products?")) {
       return [] as unknown as T;
     }
-    if (path.startsWith("/categories")) {
+    if (path === "/categories" || path.startsWith("/categories?")) {
       return [] as unknown as T;
     }
     return null as unknown as T;

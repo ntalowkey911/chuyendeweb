@@ -7,20 +7,19 @@ import { ProductCard } from "@/components/ProductCard";
 import { getStorefrontCategories, getStorefrontProducts } from "@/utils/storefront";
 
 const heroGifs = [
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmtpbGMxbTQ5ZWd4ZXA3Y2owc290OXR1YnBzOGFnMWNrdTI5MmdkbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vFKqnCdLPNOKc/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Njc0NHUxZjZhdWN4azNkNzE3OGVvOXkxNzJodXVpcmxnZGRmYWQwMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/g88xUM1rTwjfLhoRYP/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWkzbjk5YTF4djRmZHdnNWJyNmtsNGRrZDFrN2RwNnMwb28yZmwyaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IcGkqdUmYLFGE/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/M4husJOeJQdKU/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/QrYpdVF1uRvb2/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/xUPGcuomRFMUcsB9nO/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/klSQs4oaK1mOWPHLDh/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/VLuEi3ijz0wrC/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/RvGJFfFGVzjgU0TT4P/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExdmlyY3QwZXg5ZWY2bHM3ejYxYWQ5N2FrYmJlM2h0aWU0N2g5b2txNyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/V0uPaov6B29Q0JwReK/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3c4Z2w5YWdpaW9sdG5kMGFvaXhpNWNhNm5wYnF4NXFnbmQ2bmxmcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/jKaFXbKyZFja0/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3c4Z2w5YWdpaW9sdG5kMGFvaXhpNWNhNm5wYnF4NXFnbmQ2bmxmcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/daLw3QnTCkDjG/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3c4Z2w5YWdpaW9sdG5kMGFvaXhpNWNhNm5wYnF4NXFnbmQ2bmxmcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IgOEWPOgK6uVa/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3c4Z2w5YWdpaW9sdG5kMGFvaXhpNWNhNm5wYnF4NXFnbmQ2bmxmcCZlcD12MV9naWZzX3NlYXJjaCZjdD1n/piwLYTTDYHYQzFEySf/giphy.gif",
+  "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop", // Burger
+  "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?w=800&auto=format&fit=crop", // Fries
+  "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&auto=format&fit=crop", // Pizza
+  "https://images.unsplash.com/photo-1558857563-b371033873b8?w=800&auto=format&fit=crop", // Boba
+  "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop", // Burger 2
+  "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop", // Pizza 2
+  "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&auto=format&fit=crop", // Fried Chicken
+  "https://images.unsplash.com/photo-1561758033-d89a9ad46330?w=800&auto=format&fit=crop", // Burger Meal
+  "https://images.unsplash.com/photo-1543253687-c931c8e01820?w=800&auto=format&fit=crop", // Sprite/Drink
+  "https://images.unsplash.com/photo-1567206563064-6f60f40a2b57?w=800&auto=format&fit=crop", // Ice cream
+  "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=800&auto=format&fit=crop", // Salad
+  "https://images.unsplash.com/photo-1476718406336-bb5a9690ee2a?w=800&auto=format&fit=crop", // Soup
+  "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=800&auto=format&fit=crop", // Ribs/Meat
 ];
 
 export default async function HomePage() {
@@ -39,9 +38,9 @@ export default async function HomePage() {
 
           <section className="mb-14">
             <div className="mb-5">
-              <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">Khung nổi bật</h2>
+              <h2 className="text-2xl font-black text-slate-900 sm:text-3xl">Góc Gây Nghiện</h2>
               <p className="mt-2 text-sm text-slate-600">
-                Mảng GIF động để trang chủ bớt tĩnh và vào là thấy nổi bật ngay.
+                Nhìn là muốn cắn ngay một miếng!
               </p>
             </div>
 
@@ -87,7 +86,7 @@ export default async function HomePage() {
                   </div>
                   <h3 className="text-lg font-bold text-slate-900">{category.name}</h3>
                   <p className="mt-2 text-sm text-slate-500">
-                    {category.description || "Nhóm hàng thiết yếu, dễ chọn nhanh."}
+                    {category.description || "Danh mục món ăn nhanh, lựa chọn đa dạng."}
                   </p>
                 </Link>
               ))}

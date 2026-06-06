@@ -70,7 +70,7 @@ export function Header() {
         <>
           <Link
             href="/admin"
-            className={pathname === "/admin" ? "text-primary" : "text-emerald-700 transition-colors hover:text-emerald-800"}
+            className={pathname === "/admin" ? "text-primary" : "text-orange-700 transition-colors hover:text-orange-800"}
           >
             Admin
           </Link>
@@ -79,7 +79,7 @@ export function Header() {
             className={
               pathname.startsWith("/admin/orders")
                 ? "text-primary"
-                : "text-emerald-700 transition-colors hover:text-emerald-800"
+                : "text-orange-700 transition-colors hover:text-orange-800"
             }
           >
             Đơn admin
@@ -101,16 +101,9 @@ export function Header() {
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18" /><path d="M3 12h18" /><path d="M3 18h18" /></svg>
             </button>
-            <Link href="/" className="flex items-center gap-3">
-              <div className="relative h-10 w-10 overflow-hidden rounded-2xl border border-emerald-100 bg-emerald-50 shadow-sm">
-                <Image src="/logo.png" alt="Logo Nông Sản Sấy" fill sizes="40px" className="object-cover" />
-              </div>
-              <div className="leading-tight">
-                <p className="text-base font-black tracking-tight text-primary md:text-xl">Nông Sản Sấy</p>
-                <p className="hidden text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-700/60 sm:block">
-                  Pantry xanh gọn
-                </p>
-              </div>
+            <Link href="/" className="flex shrink-0 items-center gap-3 text-xl font-black tracking-tight text-primary md:text-2xl">
+              <Image src="/logo.png" alt="FastBite Logo" width={120} height={40} className="h-12 w-auto object-contain" priority />
+              FastBite
             </Link>
           </div>
 
@@ -120,14 +113,14 @@ export function Header() {
             <Button
               variant="ghost"
               size="icon"
-              className="text-primary hover:bg-emerald-50"
+              className="text-primary hover:bg-orange-50"
               onClick={() => setIsSearchOpen(true)}
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.3-4.3" /></svg>
             </Button>
 
             <Link href="/cart" className="relative">
-              <Button variant="ghost" size="icon" className="text-primary hover:bg-emerald-50">
+              <Button variant="ghost" size="icon" className="text-primary hover:bg-orange-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
               </Button>
               {cartCount > 0 && (
@@ -145,7 +138,7 @@ export function Header() {
             <SignedOut>
               <div className="hidden items-center gap-2 md:flex">
                 <Link href="/login">
-                  <Button variant="ghost" className="rounded-full text-primary hover:bg-emerald-50">
+                  <Button variant="ghost" className="rounded-full text-primary hover:bg-orange-50">
                     Đăng nhập
                   </Button>
                 </Link>

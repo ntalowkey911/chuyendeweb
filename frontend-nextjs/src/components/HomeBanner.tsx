@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 
 const bannerGifs = [
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZmtpbGMxbTQ5ZWd4ZXA3Y2owc290OXR1YnBzOGFnMWNrdTI5MmdkbyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/vFKqnCdLPNOKc/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPWVjZjA1ZTQ3Njc0NHUxZjZhdWN4azNkNzE3OGVvOXkxNzJodXVpcmxnZGRmYWQwMSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/g88xUM1rTwjfLhoRYP/giphy.gif",
-  "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExeWkzbjk5YTF4djRmZHdnNWJyNmtsNGRrZDFrN2RwNnMwb28yZmwyaSZlcD12MV9naWZzX3NlYXJjaCZjdD1n/IcGkqdUmYLFGE/giphy.gif",
+  "https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&auto=format&fit=crop",
 ];
 
 export function HomeBanner() {
@@ -16,10 +16,10 @@ export function HomeBanner() {
         muted
         loop
         playsInline
-        poster="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=70"
+        poster="https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=1400&q=80"
       >
         <source
-          src="https://cdn.coverr.co/videos/coverr-harvesting-vegetables-1568458683504?download=1080p"
+          src="https://cdn.coverr.co/videos/coverr-burger-and-fries-4074/1080p.mp4"
           type="video/mp4"
         />
       </video>
@@ -28,14 +28,13 @@ export function HomeBanner() {
       <div className="relative grid gap-8 px-6 py-10 sm:px-8 md:px-12 md:py-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
         <div className="max-w-3xl">
           <p className="w-fit rounded-full border border-white/15 bg-white/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.28em] text-white/75">
-            Kho ngon mỗi ngày
+            Món ngon nóng hổi
           </p>
           <h1 className="mt-6 text-4xl font-black leading-tight sm:text-5xl lg:text-6xl">
-            Nông sản sấy, hạt và thực phẩm khô cho gian bếp gọn nhẹ hơn.
+            Giao hàng cực tốc độ, vị ngon giòn rụm không thể chối từ.
           </h1>
           <p className="mt-5 max-w-2xl text-sm leading-7 text-white/75 sm:text-base">
-            Chọn nhanh các món pantry thực dụng, giá rõ ràng, giao diện gọn trên điện thoại và
-            dễ quản lý hơn cho shop.
+            Khám phá thực đơn đa dạng với Gà Rán, Burger và những Combo siêu tiết kiệm. Đặt ngay để thưởng thức bữa ăn hoàn hảo của bạn!
           </p>
 
           <div className="mt-7 flex flex-wrap gap-3">
