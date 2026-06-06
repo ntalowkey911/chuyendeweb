@@ -22,9 +22,11 @@ export default function AuthHydrate() {
 
             const currentClerkPhone = (user.unsafeMetadata?.phone as string) || "";
             const currentClerkAddress = (user.unsafeMetadata?.address as string) || "";
+            const localPhone = localUser?.phone || "";
+            const localAddress = localUser?.address || "";
 
             // Đồng bộ nếu chưa có localUser hoặc thông tin metadata trên Clerk bị thay đổi so với local
-            if (!localUser || localUser.phone !== currentClerkPhone || localUser.address !== currentClerkAddress) {
+            if (!localUser || localPhone !== currentClerkPhone || localAddress !== currentClerkAddress) {
               const res = await authService.syncClerk({
                 clerkId: user.id,
                 email: user.primaryEmailAddress?.emailAddress || "",
