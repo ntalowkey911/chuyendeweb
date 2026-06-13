@@ -14,6 +14,7 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 const navItems = [
   { href: "/", label: "Trang chủ" },
   { href: "/menu", label: "Sản phẩm" },
+  { href: "/custom-combo", label: "Tạo Combo" },
   { href: "/news", label: "Tin tức" },
   { href: "/contact", label: "Liên hệ" },
 ];
