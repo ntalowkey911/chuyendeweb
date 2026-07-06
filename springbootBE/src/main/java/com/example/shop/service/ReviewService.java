@@ -19,6 +19,7 @@ public class ReviewService {
     
     private final ReviewRepository reviewRepository;
     private final ProductService productService;
+    private final com.example.shop.repository.OrderRepository orderRepository;
 
     public List<Review> getReviewsByProduct(String productId) {
         return reviewRepository.findByProductIdOrderByCreatedAtDesc(productId);
@@ -34,6 +35,12 @@ public class ReviewService {
 
         CustomUserDetails userDetails = SecurityUtils.getCurrentUser();
         User user = userDetails.getUser();
+
+        // Check if user has bought this product and order is completed
+        boolean hasBought = orderRepository.existsByUserIdAndStatusAndItemsProductId(user.getId(), com.example.shop.model.OrderStatus.COMPLETED, productId);
+        if (!hasBought) {
+            throw new BadRequestException("Bạn phải mua và nhận hàng thành công mới được đánh giá.");
+        }
 
         Review review = Review.builder()
                 .productId(productId)

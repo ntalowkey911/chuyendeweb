@@ -11,11 +11,7 @@ import { getStorefrontCategories, getStorefrontProducts } from "@/utils/storefro
 type SearchValue = string | string[] | undefined;
 
 const CATEGORY_LABELS: Record<string, string> = {
-  "cac-loai-hat-va-dau": "Các loại hạt và đậu",
-  "trai-cay-va-rau-cu-say": "Trái cây và rau củ sấy",
-  "luong-thuc-va-tinh-bot": "Lương thực và tinh bột",
-  "nam-va-rong-bien": "Nấm và rong biển",
-  "thuoc-nam": "Thuốc nam",
+  // Add custom mapping for FastBite categories here if needed
 };
 
 function readValue(value: SearchValue) {

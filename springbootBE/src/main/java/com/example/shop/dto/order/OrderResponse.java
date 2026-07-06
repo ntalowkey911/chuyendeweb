@@ -23,6 +23,8 @@ public class OrderResponse {
     private BigDecimal totalAmount;
     private String promotionCode;
     private BigDecimal discountAmount;
+    private BigDecimal shippingFee;
+    private String ghnOrderCode;
     private OrderStatus status;
     private Instant createdAt;
 }

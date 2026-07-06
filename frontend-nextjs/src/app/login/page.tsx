@@ -66,7 +66,7 @@ export default function LoginPage() {
               muted
               loop
               playsInline
-              poster="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=70"
+              poster="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMCQ-NMewDEoffPwnbqDte1-tQDjsxsPrxHCgoZ61ePvcCJbb2q_QQkwU&s=10"
             >
               <source
                 src="https://cdn.coverr.co/videos/coverr-woman-picking-out-fresh-produce-1565693401504?download=1080p"
@@ -79,7 +79,7 @@ export default function LoginPage() {
                 Đăng nhập nhanh
               </p>
               <h1 className="mt-6 max-w-lg text-5xl font-black leading-tight">
-                Mua sắm nông sản sấy gọn, đẹp và thực dụng hơn.
+                Chốt đơn thần tốc, đánh bay cơn đói chỉ trong 1 nốt nhạc!
               </h1>
               <p className="mt-5 max-w-xl text-base leading-7 text-white/75">
                 Dùng email, số điện thoại hoặc Google để vào tài khoản. Đăng nhập Google sẽ tự tạo tài
@@ -91,7 +91,7 @@ export default function LoginPage() {
           <div className="flex flex-col items-center justify-center p-6 sm:p-10 lg:p-14">
             <div className="w-full max-w-[400px]">
               <Link href="/" className="mb-8 block text-2xl font-black tracking-tight text-primary">
-                Nông Sản Sấy
+                FastBite
               </Link>
               
               <h2 className="text-3xl font-black text-slate-900">Đăng nhập</h2>

@@ -28,7 +28,14 @@ public class OrderController {
     }
 
     @GetMapping("/api/orders/{id}")
-    public OrderResponse getById(@PathVariable String id) {
+    public OrderResponse getOrder(@PathVariable String id) {
         return orderService.getById(id);
+    }
+
+    @PutMapping("/api/orders/{id}/complete")
+    public OrderResponse completeOrder(@PathVariable String id) {
+        com.example.shop.dto.order.UpdateOrderStatusRequest updateReq = new com.example.shop.dto.order.UpdateOrderStatusRequest();
+        updateReq.setStatus(com.example.shop.model.OrderStatus.COMPLETED);
+        return orderService.updateStatus(id, updateReq);
     }
 }

@@ -28,6 +28,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -35,7 +36,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
         const res = await api.get<Review[]>(`/products/${productId}/reviews`);
         setReviews(res.data);
       } catch (err) {
-        console.error("Failed to fetch reviews", err);
+        console.warn("Failed to fetch reviews", err);
       } finally {
         setLoading(false);
       }
@@ -54,6 +55,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
 
     try {
       setSubmitting(true);
+      setErrorMsg("");
       const res = await api.post<Review>(`/products/${productId}/reviews`, {
         rating,
         comment,
@@ -61,8 +63,9 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
       setReviews([res.data, ...reviews]);
       setComment("");
       setRating(5);
-    } catch (err) {
+    } catch (err: any) {
       console.error("Failed to submit review", err);
+      setErrorMsg(err.response?.data?.message || "Không thể gửi đánh giá, vui lòng thử lại sau.");
     } finally {
       setSubmitting(false);
     }
@@ -117,6 +120,7 @@ export function ProductReviews({ productId }: ProductReviewsProps) {
             >
               {submitting ? "Đang gửi..." : "Gửi đánh giá"}
             </Button>
+            {errorMsg && <p className="mt-2 text-sm font-semibold text-red-600">{errorMsg}</p>}
           </form>
 
           {loading ? (

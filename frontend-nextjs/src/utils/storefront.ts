@@ -54,8 +54,17 @@ export function getStorefrontProducts(query?: ProductQuery) {
   return fetchStorefront<Product[]>("/products", query, 45);
 }
 
-export function getStorefrontCategories() {
-  return fetchStorefront<Category[]>("/categories", undefined, 300);
+export async function getStorefrontCategories() {
+  const categories = await fetchStorefront<Category[]>("/categories", undefined, 300);
+  const oldSlugs = [
+    "cac-loai-hat-va-au", 
+    "cac-loai-hat-va-dau", 
+    "luong-thuc-va-tinh-bot", 
+    "nam-va-rong-bien", 
+    "trai-cay-va-rau-cu-say", 
+    "thuoc-nam"
+  ];
+  return categories ? categories.filter(c => !oldSlugs.includes(c.slug)) : [];
 }
 
 export function getStorefrontProduct(id: string) {

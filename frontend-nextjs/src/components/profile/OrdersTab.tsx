@@ -19,14 +19,32 @@ export default function OrdersTab() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [completingOrderId, setCompletingOrderId] = useState<string | null>(null);
 
-  useEffect(() => {
+  const fetchMyOrders = () => {
     orderService
       .myOrders()
       .then((response) => setOrders(response.data))
       .catch(() => setError("Không tải được lịch sử mua hàng."))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchMyOrders();
   }, []);
+
+  const handleCompleteOrder = async (id: string) => {
+    if (!confirm("Bạn xác nhận đã nhận được hàng?")) return;
+    setCompletingOrderId(id);
+    try {
+      await orderService.completeOrder(id);
+      fetchMyOrders();
+    } catch (err: any) {
+      alert("Cập nhật thất bại, vui lòng thử lại.");
+    } finally {
+      setCompletingOrderId(null);
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -73,42 +91,82 @@ export default function OrdersTab() {
               <p className="mt-1 text-sm text-slate-500">
                 <span className="font-medium text-slate-700">Thanh toán:</span> {getPaymentMethodLabel(order.paymentMethod)}
               </p>
+              {order.ghnOrderCode && (
+                <p className="mt-1 text-sm text-slate-500">
+                  <span className="font-medium text-slate-700">Mã VĐ GHN:</span> {order.ghnOrderCode}
+                </p>
+              )}
             </div>
 
             <ul className="mt-4 space-y-2 text-sm text-slate-700">
               {order.items.map((item) => (
                 <li key={item.productId} className="flex justify-between gap-4">
-                  <span>{item.productName} <span className="font-semibold text-slate-500">x{item.quantity}</span></span>
+                  <span className="flex items-center gap-2">
+                    <a href={`/product/${item.productId}`} className="hover:text-primary hover:underline">
+                      {item.productName}
+                    </a>
+                    <span className="font-semibold text-slate-500"> x{item.quantity}</span>
+                    {order.status === "COMPLETED" && (
+                      <a href={`/product/${item.productId}#reviews`} className="text-xs font-semibold text-primary underline">
+                        Đánh giá
+                      </a>
+                    )}
+                  </span>
                   <span>{formatPrice(item.price * item.quantity)}</span>
                 </li>
               ))}
             </ul>
 
             <div className="mt-4 flex flex-col gap-2 border-t border-slate-100 pt-4">
-              {order.discountAmount && order.discountAmount > 0 ? (
-                <>
-                  <div className="flex justify-between text-sm text-slate-500">
-                    <span>Tạm tính</span>
-                    <span>{formatPrice(order.totalAmount)}</span>
-                  </div>
-                  <div className="flex justify-between text-sm font-semibold text-emerald-600">
-                    <span>Giảm giá ({order.promotionCode})</span>
-                    <span>-{formatPrice(order.discountAmount)}</span>
-                  </div>
-                  <div className="flex justify-between pt-2">
-                    <span className="font-semibold text-slate-600">Tổng thanh toán</span>
-                    <span className="text-lg font-black text-primary">
-                      {formatPrice(Math.max(0, order.totalAmount - order.discountAmount))}
-                    </span>
-                  </div>
-                </>
-              ) : (
-                <div className="flex justify-between">
-                  <span className="font-semibold text-slate-600">Tổng thanh toán</span>
-                  <span className="text-lg font-black text-primary">{formatPrice(order.totalAmount)}</span>
+              <div className="flex justify-between text-sm text-slate-500">
+                <span>Tạm tính</span>
+                <span>{formatPrice(order.items.reduce((acc, item) => acc + item.price * item.quantity, 0))}</span>
+              </div>
+              
+              {(order.shippingFee ?? 0) > 0 && (
+                <div className="flex justify-between text-sm text-slate-500">
+                  <span>Phí vận chuyển</span>
+                  <span>{formatPrice(order.shippingFee!)}</span>
                 </div>
               )}
+
+              {(order.discountAmount ?? 0) > 0 && (
+                <div className="flex justify-between text-sm font-semibold text-emerald-600">
+                  <span>Giảm giá ({order.promotionCode})</span>
+                  <span>-{formatPrice(order.discountAmount!)}</span>
+                </div>
+              )}
+
+              <div className="flex justify-between pt-2">
+                <span className="font-semibold text-slate-600">Tổng thanh toán</span>
+                <span className="text-lg font-black text-primary">
+                  {formatPrice(order.totalAmount)}
+                </span>
+              </div>
             </div>
+
+            {order.status === "SHIPPING" && (
+              <div className="mt-6 flex justify-end">
+                <button
+                  onClick={() => handleCompleteOrder(order.id)}
+                  disabled={completingOrderId === order.id}
+                  className="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white hover:bg-primary/90 disabled:opacity-50"
+                >
+                  {completingOrderId === order.id ? "Đang xử lý..." : "Hoàn tất đơn hàng"}
+                </button>
+              </div>
+            )}
+            
+            {order.status === "COMPLETED" && (
+              <div className="mt-6 flex justify-end">
+                <button
+                  disabled
+                  className="rounded-xl bg-slate-100 px-5 py-2.5 text-sm font-bold text-slate-400"
+                >
+                  Đơn hàng đã hoàn tất
+                </button>
+              </div>
+            )}
           </div>
         ))}
       </div>

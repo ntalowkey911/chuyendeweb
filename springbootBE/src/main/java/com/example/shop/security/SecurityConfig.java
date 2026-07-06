@@ -34,10 +34,20 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/articles", "/api/articles/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/payment/vnpay_return").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/contacts").permitAll()
+                        .requestMatchers("/api/ghn/**").permitAll()
+                        .requestMatchers("/api/chatbot/**").permitAll()
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter)));
+                .oauth2ResourceServer(oauth2 -> oauth2
+                        .jwt(jwt -> jwt.jwtAuthenticationConverter(customJwtAuthenticationConverter))
+                        // Khi JWT không hợp lệ trên endpoint public (permitAll), trả 401 JSON thay vì block
+                        .authenticationEntryPoint((request, response, authException) -> {
+                            response.setStatus(401);
+                            response.setContentType("application/json");
+                            response.getWriter().write("{\"error\":\"Unauthorized\"}");
+                        })
+                );
 
         return http.build();
     }

@@ -79,7 +79,7 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <p className="font-bold text-slate-900">Email</p>
-                        <p>hotro@nongsansay.com</p>
+                        <p>support@fastbite.com</p>
                       </div>
                     </div>
                     <div className="flex items-start gap-4">

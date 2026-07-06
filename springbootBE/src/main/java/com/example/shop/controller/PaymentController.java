@@ -5,6 +5,8 @@ import com.example.shop.model.Order;
 import com.example.shop.model.OrderStatus;
 import com.example.shop.repository.OrderRepository;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -105,11 +107,13 @@ public class PaymentController {
     }
 
     @GetMapping("/vnpay_return")
-    public ResponseEntity<?> paymentReturn(@RequestParam Map<String, String> params) {
+    public void paymentReturn(@RequestParam Map<String, String> params, HttpServletResponse response) throws IOException {
+        String frontendUrl = "http://localhost:3000/payment/vnpay-return";
         try {
             String vnp_SecureHash = params.get("vnp_SecureHash");
             if (vnp_SecureHash == null) {
-                return ResponseEntity.badRequest().body(Map.of("code", "99", "message", "Missing secure hash"));
+                response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Missing secure hash", StandardCharsets.UTF_8));
+                return;
             }
 
             // Remove signature parameters from signature verification
@@ -123,19 +127,22 @@ public class PaymentController {
             
             String calculatedHash = VNPayConfig.hashAllFields(vnp_Params, vnPayConfig.getHashSecret());
             if (!calculatedHash.equalsIgnoreCase(vnp_SecureHash)) {
-                return ResponseEntity.badRequest().body(Map.of("code", "97", "message", "Signature verification failed"));
+                response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Signature verification failed", StandardCharsets.UTF_8));
+                return;
             }
 
             String vnp_ResponseCode = params.get("vnp_ResponseCode");
             String vnp_TxnRef = params.get("vnp_TxnRef");
             if (vnp_TxnRef == null) {
-                return ResponseEntity.badRequest().body(Map.of("code", "98", "message", "Missing transaction reference"));
+                response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Missing transaction reference", StandardCharsets.UTF_8));
+                return;
             }
 
             Long orderCode = Long.parseLong(vnp_TxnRef);
             Optional<Order> orderOpt = orderRepository.findByOrderCode(orderCode);
             if (orderOpt.isEmpty()) {
-                return ResponseEntity.badRequest().body(Map.of("code", "94", "message", "Order not found"));
+                response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Order not found", StandardCharsets.UTF_8));
+                return;
             }
             Order order = orderOpt.get();
 
@@ -144,13 +151,13 @@ public class PaymentController {
                     order.setStatus(OrderStatus.CONFIRMED);
                     orderRepository.save(order);
                 }
-                return ResponseEntity.ok(Map.of("code", "00", "message", "Success"));
+                response.sendRedirect(frontendUrl + "?status=success");
             } else {
-                return ResponseEntity.ok(Map.of("code", "99", "message", "Payment failed with response code: " + vnp_ResponseCode));
+                response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Payment failed with response code: " + vnp_ResponseCode, StandardCharsets.UTF_8));
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().body(Map.of("code", "97", "message", "Error verifying payment: " + e.getMessage()));
+            response.sendRedirect(frontendUrl + "?status=error&message=" + URLEncoder.encode("Error verifying payment: " + e.getMessage(), StandardCharsets.UTF_8));
         }
     }
 }

@@ -13,6 +13,8 @@ export const metadata: Metadata = {
   },
 };
 
+import Chatbot from "@/components/Chatbot";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -24,6 +26,7 @@ export default function RootLayout({
         <body className="min-h-screen bg-background text-foreground antialiased">
           <AuthHydrate />
           {children}
+          <Chatbot />
         </body>
       </html>
     </ClerkProvider>

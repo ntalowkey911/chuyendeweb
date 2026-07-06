@@ -17,34 +17,21 @@ function VNPayReturnContent() {
 
   useEffect(() => {
     const verifyPayment = async () => {
-      try {
-        const vnp_ResponseCode = searchParams.get("vnp_ResponseCode");
-        
-        if (vnp_ResponseCode !== "00") {
-          setStatus("error");
-          setMessage(`Thanh toán thất bại (Mã lỗi: ${vnp_ResponseCode}).`);
-          return;
-        }
+      const statusParam = searchParams.get("status");
+      const messageParam = searchParams.get("message");
 
-        // Send all search params to backend to verify signature
-        const params = Object.fromEntries(searchParams.entries());
-        const res = await api.get("/payment/vnpay_return", { params });
-        
-        if (res.data.code === "00") {
-          setStatus("success");
-        } else {
-          setStatus("error");
-          setMessage(res.data.message || "Xác thực thanh toán thất bại.");
-        }
-      } catch (error: any) {
+      if (statusParam === "success") {
+        setStatus("success");
+      } else if (statusParam === "error") {
         setStatus("error");
-        setMessage(error.response?.data?.message || "Lỗi kết nối khi xác thực thanh toán.");
+        setMessage(messageParam || "Thanh toán thất bại hoặc chữ ký xác thực không hợp lệ.");
+      } else {
+        setStatus("error");
+        setMessage("Không tìm thấy thông tin kết quả giao dịch.");
       }
     };
 
-    if (searchParams.toString()) {
-      verifyPayment();
-    }
+    verifyPayment();
   }, [searchParams]);
 
   return (

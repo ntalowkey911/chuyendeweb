@@ -32,6 +32,7 @@ export const orderService = {
   adminOrders: (page = 0, size = 10) => api.get<PageResponse<Order>>(`/admin/orders?page=${page}&size=${size}`),
   adminCustomers: () => api.get<CustomerStats[]>("/admin/customers"),
   updateOrderStatus: (id: string, status: OrderStatus) => api.put<Order>(`/admin/orders/${id}/status`, { status }),
+  completeOrder: (id: string) => api.put<Order>(`/orders/${id}/complete`),
   validatePromotion: (code: string) => api.get<ValidatePromotionResponse>(`/promotions/validate?code=${encodeURIComponent(code)}`),
   dashboard: () => api.get<DashboardStats>("/admin/dashboard"),
 };

@@ -4,6 +4,7 @@ import com.example.shop.dto.PageResponse;
 import com.example.shop.dto.admin.AdminOverviewResponse;
 import com.example.shop.dto.admin.CustomerStatsResponse;
 import com.example.shop.dto.admin.DashboardResponse;
+import com.example.shop.dto.admin.StatisticsResponse;
 import com.example.shop.dto.auth.UserResponse;
 import com.example.shop.dto.category.CategoryRequest;
 import com.example.shop.dto.category.CategoryResponse;
@@ -23,6 +24,7 @@ import com.example.shop.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +40,11 @@ public class AdminController {
     private final CategoryService categoryService;
     private final ArticleService articleService;
     private final ContactService contactService;
+
+    @GetMapping("/statistics")
+    public ResponseEntity<StatisticsResponse> getStatistics() {
+        return ResponseEntity.ok(adminService.getStatistics());
+    }
 
     @GetMapping("/dashboard")
     public DashboardResponse dashboard() {

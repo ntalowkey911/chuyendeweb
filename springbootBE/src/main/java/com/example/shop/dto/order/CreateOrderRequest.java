@@ -18,4 +18,8 @@ public class CreateOrderRequest {
     private PaymentMethod paymentMethod;
 
     private String promotionCode;
+
+    private int toDistrictId;
+    private String toWardCode;
+    private String customerName; // GHN requires receiver name
 }

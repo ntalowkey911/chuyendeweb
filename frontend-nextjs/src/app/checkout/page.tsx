@@ -13,7 +13,7 @@ import { useCartStore } from "@/store/cartStore";
 import type { PaymentMethod } from "@/types/order";
 import { formatPrice } from "@/utils/format";
 import { getPaymentMethodLabel } from "@/utils/catalog";
-import { addressApi, type Province, type District, type Ward } from "@/services/addressApi";
+import { getProvinces, getDistricts, getWards, calculateFee } from "@/services/ghnService";
 import api from "@/services/api";
 
 const checkoutGifs = [
@@ -33,14 +33,15 @@ function CheckoutContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const [useSavedAddress, setUseSavedAddress] = useState(true);
-  const [provinces, setProvinces] = useState<Province[]>([]);
-  const [districts, setDistricts] = useState<District[]>([]);
-  const [wards, setWards] = useState<Ward[]>([]);
+  const [useSavedAddress, setUseSavedAddress] = useState(false);
+  const [provinces, setProvinces] = useState<any[]>([]);
+  const [districts, setDistricts] = useState<any[]>([]);
+  const [wards, setWards] = useState<any[]>([]);
   const [selectedProvinceCode, setSelectedProvinceCode] = useState<number | "">("");
   const [selectedDistrictCode, setSelectedDistrictCode] = useState<number | "">("");
-  const [selectedWardCode, setSelectedWardCode] = useState<number | "">("");
+  const [selectedWardCode, setSelectedWardCode] = useState<string>("");
   const [street, setStreet] = useState("");
+  const [shippingFee, setShippingFee] = useState(0);
 
   const [promotionCode, setPromotionCode] = useState("");
   const [discountAmount, setDiscountAmount] = useState(0);
@@ -50,38 +51,55 @@ function CheckoutContent() {
   useEffect(() => {
     void fetchCart();
     void fetchMe();
-    addressApi.getProvinces().then(setProvinces);
+    getProvinces().then((res) => {
+      if (res?.data) setProvinces(res.data);
+    });
   }, [fetchCart, fetchMe]);
 
   useEffect(() => {
     if (user) {
-      setShippingAddress(user.address || "");
       setPhone(user.phone || "");
-      if (!user.address) {
-        setUseSavedAddress(false);
-      }
     }
   }, [user]);
 
   useEffect(() => {
     if (selectedProvinceCode) {
-      addressApi.getDistricts(Number(selectedProvinceCode)).then(setDistricts);
+      getDistricts(Number(selectedProvinceCode)).then((res) => {
+        if (res?.data) setDistricts(res.data);
+      });
     } else {
       setDistricts([]);
     }
     setSelectedDistrictCode("");
     setSelectedWardCode("");
     setWards([]);
+    setShippingFee(0);
   }, [selectedProvinceCode]);
 
   useEffect(() => {
     if (selectedDistrictCode) {
-      addressApi.getWards(Number(selectedDistrictCode)).then(setWards);
+      getWards(Number(selectedDistrictCode)).then((res) => {
+        if (res?.data) setWards(res.data);
+      });
     } else {
       setWards([]);
     }
     setSelectedWardCode("");
+    setShippingFee(0);
   }, [selectedDistrictCode]);
+
+  useEffect(() => {
+    if (selectedDistrictCode && selectedWardCode) {
+      // Calculate fee
+      calculateFee(Number(selectedDistrictCode), selectedWardCode).then((res) => {
+        if (res?.data?.total) {
+          setShippingFee(res.data.total);
+        }
+      });
+    } else {
+      setShippingFee(0);
+    }
+  }, [selectedWardCode, selectedDistrictCode]);
 
   const handleApplyPromo = async () => {
     if (!promotionCode.trim()) {
@@ -115,22 +133,16 @@ function CheckoutContent() {
     setLoading(true);
     setError("");
 
-    let finalAddress = shippingAddress;
-    if (!useSavedAddress) {
-      const p = provinces.find((x) => x.code === Number(selectedProvinceCode))?.name;
-      const d = districts.find((x) => x.code === Number(selectedDistrictCode))?.name;
-      const w = wards.find((x) => x.code === Number(selectedWardCode))?.name;
-      if (!p || !d || !w || !street.trim()) {
-        setError("Vui lòng nhập đầy đủ địa chỉ giao hàng.");
-        setLoading(false);
-        return;
-      }
-      finalAddress = `${street.trim()}, ${w}, ${d}, ${p}`;
-    } else if (!finalAddress.trim()) {
-      setError("Vui lòng nhập địa chỉ giao hàng.");
+    const p = provinces.find((x) => x.ProvinceID === Number(selectedProvinceCode))?.ProvinceName;
+    const d = districts.find((x) => x.DistrictID === Number(selectedDistrictCode))?.DistrictName;
+    const w = wards.find((x) => x.WardCode === selectedWardCode)?.WardName;
+    
+    if (!p || !d || !w || !street.trim()) {
+      setError("Vui lòng nhập đầy đủ địa chỉ giao hàng.");
       setLoading(false);
       return;
     }
+    const finalAddress = `${street.trim()}, ${w}, ${d}, ${p}`;
 
     try {
       const orderRes = await orderService.create({
@@ -138,6 +150,9 @@ function CheckoutContent() {
         phone: phone.trim(),
         paymentMethod,
         promotionCode: discountAmount > 0 ? promotionCode.trim() : undefined,
+        toDistrictId: Number(selectedDistrictCode),
+        toWardCode: selectedWardCode,
+        customerName: user?.fullName || "Khách hàng",
       });
 
       if (paymentMethod === "VNPAY") {
@@ -200,84 +215,66 @@ function CheckoutContent() {
                     <p className="text-xs font-black uppercase tracking-[0.22em] text-slate-500">
                       Địa chỉ giao hàng
                     </p>
-                    {user?.address && (
-                      <button
-                        type="button"
-                        onClick={() => setUseSavedAddress(!useSavedAddress)}
-                        className="text-sm font-bold text-primary hover:underline transition-all duration-200"
-                      >
-                        {useSavedAddress ? "Đổi địa chỉ" : "Dùng địa chỉ mặc định"}
-                      </button>
-                    )}
                   </div>
 
-                  {useSavedAddress && user?.address ? (
-                    <div className="rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-                      <p className="font-medium text-slate-800">{user.address}</p>
-                      <p className="mt-1 text-sm text-slate-500">
-                        (Địa chỉ mặc định của tài khoản)
-                      </p>
-                    </div>
-                  ) : (
-                    <div className="space-y-4 rounded-[1.5rem] border border-slate-200 p-5">
-                      <div className="grid gap-4 md:grid-cols-3">
-                        <div>
-                          <label className="mb-1 block text-sm font-semibold text-slate-700">Tỉnh/Thành</label>
-                          <select
-                            value={selectedProvinceCode}
-                            onChange={(e) => setSelectedProvinceCode(e.target.value ? Number(e.target.value) : "")}
-                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary text-sm"
-                            required={!useSavedAddress}
-                          >
-                            <option value="">Chọn Tỉnh/Thành</option>
-                            {provinces.map((p) => (
-                              <option key={p.code} value={p.code}>{p.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="mb-1 block text-sm font-semibold text-slate-700">Quận/Huyện</label>
-                          <select
-                            value={selectedDistrictCode}
-                            onChange={(e) => setSelectedDistrictCode(e.target.value ? Number(e.target.value) : "")}
-                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
-                            required={!useSavedAddress}
-                            disabled={!selectedProvinceCode}
-                          >
-                            <option value="">Chọn Quận/Huyện</option>
-                            {districts.map((d) => (
-                              <option key={d.code} value={d.code}>{d.name}</option>
-                            ))}
-                          </select>
-                        </div>
-                        <div>
-                          <label className="mb-1 block text-sm font-semibold text-slate-700">Phường/Xã</label>
-                          <select
-                            value={selectedWardCode}
-                            onChange={(e) => setSelectedWardCode(e.target.value ? Number(e.target.value) : "")}
-                            className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
-                            required={!useSavedAddress}
-                            disabled={!selectedDistrictCode}
-                          >
-                            <option value="">Chọn Phường/Xã</option>
-                            {wards.map((w) => (
-                              <option key={w.code} value={w.code}>{w.name}</option>
-                            ))}
-                          </select>
-                        </div>
+                  <div className="space-y-4 rounded-[1.5rem] border border-slate-200 p-5">
+                    <div className="grid gap-4 md:grid-cols-3">
+                      <div>
+                        <label className="mb-1 block text-sm font-semibold text-slate-700">Tỉnh/Thành</label>
+                        <select
+                          value={selectedProvinceCode}
+                          onChange={(e) => setSelectedProvinceCode(e.target.value ? Number(e.target.value) : "")}
+                          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary text-sm"
+                          required
+                        >
+                          <option value="">Chọn Tỉnh/Thành</option>
+                          {provinces.map((p) => (
+                            <option key={p.ProvinceID} value={p.ProvinceID}>{p.ProvinceName}</option>
+                          ))}
+                        </select>
                       </div>
                       <div>
-                        <label className="mb-1 block text-sm font-semibold text-slate-700">Số nhà, Tên đường</label>
-                        <input
-                          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 outline-none focus:border-primary text-sm"
-                          placeholder="Ví dụ: 123 Đường ABC..."
-                          value={street}
-                          onChange={(e) => setStreet(e.target.value)}
-                          required={!useSavedAddress}
-                        />
+                        <label className="mb-1 block text-sm font-semibold text-slate-700">Quận/Huyện</label>
+                        <select
+                          value={selectedDistrictCode}
+                          onChange={(e) => setSelectedDistrictCode(e.target.value ? Number(e.target.value) : "")}
+                          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
+                          required
+                          disabled={!selectedProvinceCode}
+                        >
+                          <option value="">Chọn Quận/Huyện</option>
+                          {districts.map((d) => (
+                            <option key={d.DistrictID} value={d.DistrictID}>{d.DistrictName}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-sm font-semibold text-slate-700">Phường/Xã</label>
+                        <select
+                          value={selectedWardCode}
+                          onChange={(e) => setSelectedWardCode(e.target.value)}
+                          className="h-12 w-full rounded-xl border border-slate-200 bg-white px-3 outline-none focus:border-primary disabled:bg-slate-50 text-sm"
+                          required
+                          disabled={!selectedDistrictCode}
+                        >
+                          <option value="">Chọn Phường/Xã</option>
+                          {wards.map((w) => (
+                            <option key={w.WardCode} value={w.WardCode}>{w.WardName}</option>
+                          ))}
+                        </select>
                       </div>
                     </div>
-                  )}
+                    <div>
+                      <label className="mb-1 block text-sm font-semibold text-slate-700">Số nhà, Tên đường</label>
+                      <input
+                        className="h-12 w-full rounded-xl border border-slate-200 bg-white px-4 outline-none focus:border-primary text-sm"
+                        placeholder="Ví dụ: 123 Đường ABC..."
+                        value={street}
+                        onChange={(e) => setStreet(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </div>
                 </div>
 
                 <div className="rounded-[1.5rem] border border-slate-200 p-4">
@@ -387,6 +384,16 @@ function CheckoutContent() {
                     <span>Thanh toán</span>
                     <span>{getPaymentMethodLabel(paymentMethod)}</span>
                   </div>
+                  {shippingFee > 0 && (
+                    <div className="mt-3 flex justify-between text-sm text-slate-600">
+                      <span>Phí vận chuyển</span>
+                      {discountAmount > 0 && (promotionCode.includes("FREESHIP") || promotionCode.includes("MIENPHISHIP")) ? (
+                        <span className="font-semibold text-emerald-600">Miễn phí</span>
+                      ) : (
+                        <span>{formatPrice(shippingFee)}</span>
+                      )}
+                    </div>
+                  )}
                   {discountAmount > 0 && (
                     <div className="mt-3 flex justify-between text-sm text-emerald-600 font-semibold">
                       <span>Giảm giá</span>
@@ -395,7 +402,16 @@ function CheckoutContent() {
                   )}
                   <div className="mt-3 flex justify-between text-sm text-slate-600">
                     <span>Tổng thanh toán</span>
-                    <span className="font-black text-primary">{formatPrice(Math.max(0, (cart?.totalAmount || 0) - discountAmount))}</span>
+                    <span className="font-black text-primary">
+                      {formatPrice(
+                        Math.max(
+                          0, 
+                          (cart?.totalAmount || 0) + 
+                          ((discountAmount > 0 && (promotionCode.includes("FREESHIP") || promotionCode.includes("MIENPHISHIP"))) ? 0 : shippingFee) - 
+                          discountAmount
+                        )
+                      )}
+                    </span>
                   </div>
                 </div>
               </aside>

@@ -94,5 +94,9 @@ export const adminService = {
   },
   deletePromotion(id: string) {
     return api.delete(`/admin/promotions/${id}`);
-  }
+  },
+
+  getStatistics() {
+    return api.get('/admin/statistics');
+  },
 };

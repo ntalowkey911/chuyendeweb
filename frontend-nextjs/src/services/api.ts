@@ -31,12 +31,17 @@ api.interceptors.request.use(async (config) => {
 
 api.interceptors.response.use(
   (res) => res,
-  (error) => {
-    if (error.response?.status === 401 && typeof window !== "undefined") {
+  async (error) => {
+    const originalRequest = error.config;
+    if (error.response?.status === 401 && typeof window !== "undefined" && !originalRequest._retry) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      // Don't forcefully redirect to /login here if we're dealing with Clerk auth
-      // The useAuth hook in AuthHydrate handles the logout properly when token expires
+      // Retry the request once without the Authorization header (for public endpoints like GET reviews)
+      if (originalRequest.method === "get") {
+        originalRequest._retry = true;
+        delete originalRequest.headers.Authorization;
+        return api(originalRequest);
+      }
     }
     return Promise.reject(error);
   }

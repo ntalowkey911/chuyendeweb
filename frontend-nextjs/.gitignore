@@ -2,3 +2,6 @@ node_modules
 .next
 out
 .env.local
+
+# clerk configuration (can include secrets)
+/.clerk/

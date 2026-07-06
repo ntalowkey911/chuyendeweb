@@ -14,4 +14,6 @@ public interface OrderRepository extends MongoRepository<Order, String> {
     List<Order> findByStatus(OrderStatus status);
 
     Optional<Order> findByOrderCode(Long orderCode);
+
+    boolean existsByUserIdAndStatusAndItemsProductId(String userId, OrderStatus status, String productId);
 }

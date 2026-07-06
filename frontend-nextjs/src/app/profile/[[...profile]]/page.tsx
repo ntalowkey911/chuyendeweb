@@ -30,10 +30,6 @@ export default function ProfilePage() {
         
         <main className="flex-1 py-8 md:py-12">
           <Container className="flex justify-center">
-            {/* 
-              We use Clerk's UserProfile to handle the main UI. 
-              We inject custom tabs for Orders, Wishlist, and Address. 
-            */}
             <UserProfile path="/profile" routing="path">
               <UserProfile.Page
                 label="Đơn hàng"

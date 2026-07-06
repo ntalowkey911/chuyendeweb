@@ -77,10 +77,19 @@ function AdminOrdersContent() {
                   </select>
                 </div>
 
-                <div className="mt-4 grid gap-3 text-sm text-slate-600 md:grid-cols-3">
+                <div className="mt-4 grid gap-3 text-sm text-slate-600 md:grid-cols-2 lg:grid-cols-4">
                   <p><span className="font-bold text-slate-900">Địa chỉ:</span> {order.shippingAddress}</p>
                   <p><span className="font-bold text-slate-900">SĐT:</span> {order.phone}</p>
                   <p><span className="font-bold text-slate-900">Thanh toán:</span> {getPaymentMethodLabel(order.paymentMethod)}</p>
+                  <p>
+                    <span className="font-bold text-slate-900">GHN:</span>{" "}
+                    {order.ghnOrderCode ? (
+                      <span className="text-primary font-mono">{order.ghnOrderCode}</span>
+                    ) : (
+                      "Không có"
+                    )}
+                    {order.shippingFee && order.shippingFee > 0 && ` (${formatPrice(order.shippingFee)})`}
+                  </p>
                 </div>
 
                 <div className="mt-4 space-y-2 rounded-[1.25rem] bg-slate-50 p-4">

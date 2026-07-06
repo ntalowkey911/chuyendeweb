@@ -47,6 +47,11 @@ public class Order {
     @Builder.Default
     private OrderStatus status = OrderStatus.PENDING;
 
+    private String ghnOrderCode;
+
+    @Builder.Default
+    private BigDecimal shippingFee = BigDecimal.ZERO;
+
     @CreatedDate
     private Instant createdAt;
 }

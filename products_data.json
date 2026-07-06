@@ -1,0 +1,1048 @@
+[
+
+
+  {
+    "id": "6a23b05c1cd65883e27f9ab9",
+    "name": "Combo Gia Đình (4 người)",
+    "description": "4 Burger + 4 Khoai Vừa + 4 Nước Ngọt.",
+    "price": 320000,
+    "imageUrl": "https://images.unsplash.com/photo-1576402187878-974f70c890a5?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1576402187878-974f70c890a5?w=800&q=80"
+    ],
+    "category": "best-sellers",
+    "categoryName": "Best Sellers",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 1750,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9abf",
+    "name": "Combo Bữa Trưa (1 người)",
+    "description": "1 Burger Gà + 1 Khoai Nhỏ + 1 Trà Đào.",
+    "price": 95000,
+    "imageUrl": "https://images.unsplash.com/photo-1576402187878-974f70c890a5?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1576402187878-974f70c890a5?w=800&q=80"
+    ],
+    "category": "combo-khuyen-mai",
+    "categoryName": "Combo / Khuyến Mãi",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac0",
+    "name": "Combo Student Deal",
+    "description": "1 Burger Bò Phô Mai + 1 Khoai Vừa + 1 Nước Suối — dành cho học sinh/sinh viên.",
+    "price": 85000,
+    "imageUrl": "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?w=800&q=80"
+    ],
+    "category": "combo-khuyen-mai",
+    "categoryName": "Combo / Khuyến Mãi",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac7",
+    "name": "Gà Rán Giòn (2 miếng)",
+    "description": "Gà ướp gia vị đặc trưng, chiên giòn vàng, không ngấm dầu.",
+    "price": 75000,
+    "imageUrl": "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 99,
+    "soldCount": 1,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T19:58:12.515Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aca",
+    "name": "Hotdog Classic",
+    "description": "Xúc xích bò dài 20cm, bánh mì mềm, mù tạt & ketchup.",
+    "price": 59000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9acb",
+    "name": "Hotdog Phô Mai Kéo",
+    "description": "Xúc xích bò + phô mai mozzarella kéo, ớt jalapeño.",
+    "price": 69000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad9",
+    "name": "Salad Cá Ngừ Caesar",
+    "description": "Cá ngừ đóng hộp, rau romaine, crouton giòn, sốt Caesar đặc truyền.",
+    "price": 59000,
+    "imageUrl": "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=80"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 99,
+    "soldCount": 1,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T19:58:12.637Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9adc",
+    "name": "Kem Vanilla Xoắn",
+    "description": "Kem tươi vị vanilla Madagascar, nón waffle giòn.",
+    "price": 28000,
+    "imageUrl": "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=800&q=80"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 97,
+    "soldCount": 3,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-01T02:54:26.869Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9add",
+    "name": "Kem Chocolate Đậm",
+    "description": "Kem chocolate Bỉ 70% cacao, phủ sốt fudge nóng.",
+    "price": 30000,
+    "imageUrl": "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=800&q=80"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9adf",
+    "name": "Tiramisu Ý",
+    "description": "Tiramisu truyền thống: mascarpone, cà phê espresso, bột cacao.",
+    "price": 52000,
+    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae2",
+    "name": "Sữa Chua Dẻo Phủ Granola",
+    "description": "Sữa chua Hy Lạp dẻo, granola hạt, mật ong nguyên chất.",
+    "price": 35000,
+    "imageUrl": "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=800&q=80"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae6",
+    "name": "Trà Sữa Trân Châu Đen",
+    "description": "Trà Assam, sữa tươi, trân châu đen nấu mềm, đường 50%.",
+    "price": 45000,
+    "imageUrl": "https://bizweb.dktcdn.net/100/519/595/files/1-180559f8-1ce7-43b7-83ce-a37eac803791.jpg?v=1744966178923",
+    "imageUrls": [
+      "https://bizweb.dktcdn.net/100/519/595/files/1-180559f8-1ce7-43b7-83ce-a37eac803791.jpg?v=1744966178923"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae7",
+    "name": "Trà Sữa Matcha Uji",
+    "description": "Bột matcha Nhật Uji grade A, sữa tươi, trân châu trắng.",
+    "price": 49000,
+    "imageUrl": "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1536256263959-770b48d82b0a?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae8",
+    "name": "Trà Đào Cam Sả",
+    "description": "Trà xanh pha lạnh, đào tươi, cam vắt, sả thơm.",
+    "price": 42000,
+    "imageUrl": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae9",
+    "name": "Trà Vải Thanh Nhiệt",
+    "description": "Trà trắng, vải đỏ ngâm, đá bào, thanh mát.",
+    "price": 42000,
+    "imageUrl": "https://images.unsplash.com/photo-1558024220-b4afce668dd9?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1558024220-b4afce668dd9?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aea",
+    "name": "Trà Gừng Mật Ong Chanh",
+    "description": "Trà gừng ấm, mật ong nguyên chất, chanh tươi — tốt cho hệ miễn dịch.",
+    "price": 39000,
+    "imageUrl": "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1556679343-c7306c1976bc?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aec",
+    "name": "Pepsi Lon 330ml",
+    "description": "Pepsi lon 330ml lạnh.",
+    "price": 20000,
+    "imageUrl": "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1629203851122-3726ecdf080e?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aed",
+    "name": "Sprite Lon 330ml",
+    "description": "Sprite chanh soda, thanh mát.",
+    "price": 20000,
+    "imageUrl": "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1625772299848-391b6a87d7b3?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aef",
+    "name": "Cà Phê Đen Đá",
+    "description": "Robusta Đắk Lắk rang xay tươi, pha phin, đá đập nhuyễn.",
+    "price": 29000,
+    "imageUrl": "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 99,
+    "soldCount": 1,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T19:58:12.760Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ab5",
+    "name": "Burger Bò Phô Mai",
+    "description": "Burger bò Angus 180g, phô mai cheddar tan chảy, rau xà lách tươi.",
+    "price": 85000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "best-sellers",
+    "categoryName": "Best Sellers",
+    "brand": null,
+    "stock": 95,
+    "soldCount": 3205,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T19:01:09.364Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac1",
+    "name": "Combo Pizza Xúc Xích Đặc Biệt",
+    "description": "1 Pizza Xúc Xích 30cm + 2 Lon Pepsi.",
+    "price": 185000,
+    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
+    ],
+    "category": "combo-khuyen-mai",
+    "categoryName": "Combo / Khuyến Mãi",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac2",
+    "name": "Burger Bò Phô Mai Classic",
+    "description": "Burger bò Angus 180g, phô mai cheddar, rau xà lách, cà chua.",
+    "price": 85000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 96,
+    "soldCount": 4,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-01T04:25:52.013Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac3",
+    "name": "Burger Gà Giòn",
+    "description": "Gà ức chiên giòn, sốt mayo đặc biệt, dưa leo muối chua.",
+    "price": 79000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac4",
+    "name": "Burger Tôm Biển",
+    "description": "Miếng tôm panko 120g, sốt tartar, rau bắp cải tươi.",
+    "price": 92000,
+    "imageUrl": "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1553909489-cd47e0907980?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac8",
+    "name": "Gà Rán Giòn (3 miếng)",
+    "description": "Phần gà rán 3 miếng, lý tưởng cho bữa no.",
+    "price": 99000,
+    "imageUrl": "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac9",
+    "name": "Gà Sốt Cay Hàn Quốc",
+    "description": "Gà tẩm sốt gochujang cay ngọt, phủ mè rang.",
+    "price": 80000,
+    "imageUrl": "https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1562967916-eb82221dfb92?w=800&q=80"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9acc",
+    "name": "Pizza Xúc Xích Đặc Biệt",
+    "description": "Đế mỏng kiểu Ý, xúc xích pepperoni, phô mai mozzarella 3 lớp.",
+    "price": 145000,
+    "imageUrl": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800&q=80"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ace",
+    "name": "Pizza BBQ Gà Xông Khói",
+    "description": "Gà xông khói, hành tây, ớt chuông vàng, sốt BBQ đặc biệt.",
+    "price": 155000,
+    "imageUrl": "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=800&q=80"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad0",
+    "name": "Double Burger Deluxe",
+    "description": "Phiên bản mới — 2 lớp bò 120g, sốt truffle mayo, phô mai gruyère.",
+    "price": 115000,
+    "imageUrl": "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&q=80"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad5",
+    "name": "Phô Mai Que Chiên",
+    "description": "Phô mai mozzarella bọc breadcrumb, chiên vàng, sốt marinara.",
+    "price": 45000,
+    "imageUrl": "https://traicayhoabien.com/wp-content/uploads/2023/05/PHO-MAI-QUE.jpg",
+    "imageUrls": [
+      "https://traicayhoabien.com/wp-content/uploads/2023/05/PHO-MAI-QUE.jpg"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 96,
+    "soldCount": 4,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-01T03:01:04.920Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad6",
+    "name": "Gà Viên Chiên (6 viên)",
+    "description": "Gà xay nhuyễn, viên tròn, chiên giòn, chấm sốt tương cà hoặc BBQ.",
+    "price": 49000,
+    "imageUrl": "https://kumapizza.vn/wp-content/uploads/2025/01/Ga-vien-chien-karaage-copy-1.png",
+    "imageUrls": [
+      "https://kumapizza.vn/wp-content/uploads/2025/01/Ga-vien-chien-karaage-copy-1.png"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 97,
+    "soldCount": 3,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T19:58:12.388Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad7",
+    "name": "Xúc Xích Chiên Bơ Tỏi",
+    "description": "Xúc xích bò chiên bơ tỏi thơm lừng, kèm tương ớt.",
+    "price": 39000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRntsWr8PQl94N1_kuzQwaDn79cKwDe_iNqy6rPEBnsdW_Mdo-1yZfibdU&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRntsWr8PQl94N1_kuzQwaDn79cKwDe_iNqy6rPEBnsdW_Mdo-1yZfibdU&s=10"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 99,
+    "soldCount": 1,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-06T20:03:53.929Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ade",
+    "name": "Bánh Tart Trứng",
+    "description": "Bánh tart trứng kiểu Hong Kong, vỏ giòn, nhân trứng mịn mềm.",
+    "price": 22000,
+    "imageUrl": "https://shopazmart.com/wp-content/uploads/2025/09/btarttrung-3A.jpg",
+    "imageUrls": [
+      "https://shopazmart.com/wp-content/uploads/2025/09/btarttrung-3A.jpg"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae3",
+    "name": "Hoa Quả Tươi Theo Mùa",
+    "description": "Đĩa hoa quả tươi cắt sẵn: dưa hấu, dưa lưới, nho, dâu.",
+    "price": 42000,
+    "imageUrl": "https://cdn.tgdd.vn/2020/07/CookProductThumb/31-620x620-3.jpg",
+    "imageUrls": [
+      "https://cdn.tgdd.vn/2020/07/CookProductThumb/31-620x620-3.jpg"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae5",
+    "name": "Chocolate Lava Cake",
+    "description": "Bánh chocolate nóng, lòng chảy khi cắt, kèm kem vanilla.",
+    "price": 58000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ChvkfOxw0ZQs4XhBF9Q_jqoU9qA_olZnP3msCVSNb2vCBAVbp75pe5eD&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ChvkfOxw0ZQs4XhBF9Q_jqoU9qA_olZnP3msCVSNb2vCBAVbp75pe5eD&s=10"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aee",
+    "name": "Nước Suối Lavie 500ml",
+    "description": "Nước khoáng thiên nhiên Lavie 500ml.",
+    "price": 10000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRESN60-6RnbVNzzO4sbhkQ83sYtlIIWexw43vTuz88SNByqSPnHLFNZcA&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRESN60-6RnbVNzzO4sbhkQ83sYtlIIWexw43vTuz88SNByqSPnHLFNZcA&s=10"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9af0",
+    "name": "Cà Phê Sữa Đá",
+    "description": "Cà phê đen pha phin + sữa đặc Ông Thọ, đá đập.",
+    "price": 32000,
+    "imageUrl": "https://vanmart.vn/thumbs/600x600x1/upload/product/cafe-sua-da-7453.png",
+    "imageUrls": [
+      "https://vanmart.vn/thumbs/600x600x1/upload/product/cafe-sua-da-7453.png"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ab8",
+    "name": "Trà Sữa Trân Châu",
+    "description": "Trà sữa Đài Loan, trân châu đen dẻo, đường 50%.",
+    "price": 45000,
+    "imageUrl": "https://bizweb.dktcdn.net/100/519/595/files/1-180559f8-1ce7-43b7-83ce-a37eac803791.jpg?v=1744966178923",
+    "imageUrls": [
+      "https://bizweb.dktcdn.net/100/519/595/files/1-180559f8-1ce7-43b7-83ce-a37eac803791.jpg?v=1744966178923"
+    ],
+    "category": "best-sellers",
+    "categoryName": "Best Sellers",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 1950,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9abb",
+    "name": "Burger BBQ Smoke",
+    "description": "Burger bò xông khói BBQ, hành tây caramel, sốt mayo smoky.",
+    "price": 90000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrjkfDsJMrz-lc8CBI8FU3-nqalLSdC92ui2NB2L-BytH5dk8QWxQnfdoY&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrjkfDsJMrz-lc8CBI8FU3-nqalLSdC92ui2NB2L-BytH5dk8QWxQnfdoY&s=10"
+    ],
+    "category": "best-sellers",
+    "categoryName": "Best Sellers",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 1430,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9abc",
+    "name": "Gà Sốt Cay Hàn Quốc",
+    "description": "Gà tươi tẩm sốt gochujang cay ngọt phong cách Hàn Quốc.",
+    "price": 80000,
+    "imageUrl": "https://cdn.mediamart.vn/images/news/cach-lam-ga-ran-st-cay-han-quc-gion-rm-ai-an-cung-me_eeea1763.jpg",
+    "imageUrls": [
+      "https://cdn.mediamart.vn/images/news/cach-lam-ga-ran-st-cay-han-quc-gion-rm-ai-an-cung-me_eeea1763.jpg"
+    ],
+    "category": "best-sellers",
+    "categoryName": "Best Sellers",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 1300,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac5",
+    "name": "Burger Bò BBQ Caramel",
+    "description": "Bò xông khói BBQ, hành tây caramel, sốt smoky mayo.",
+    "price": 90000,
+    "imageUrl": "https://burgerking.vn/media/catalog/product/cache/1/image/1800x/040ec09b1e35df139433887a97daa66f/b/u/burger_b_n_ng_ph_mai_th_t_heo_x_ng_kh_i_whopper_1.jpg",
+    "imageUrls": [
+      "https://burgerking.vn/media/catalog/product/cache/1/image/1800x/040ec09b1e35df139433887a97daa66f/b/u/burger_b_n_ng_ph_mai_th_t_heo_x_ng_kh_i_whopper_1.jpg"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9acd",
+    "name": "Pizza Hải Sản Đà Lạt",
+    "description": "Tôm, mực, bạch tuộc tươi, nấm đông cô, sốt bechamel.",
+    "price": 165000,
+    "imageUrl": "https://www.lottemart.vn/media/catalog/product/cache/0x0/0/4/0400203610004-1.jpg.webp",
+    "imageUrls": [
+      "https://www.lottemart.vn/media/catalog/product/cache/0x0/0/4/0400203610004-1.jpg.webp"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad2",
+    "name": "Khoai Tây Chiên Nhỏ",
+    "description": "Khoai tây cắt sợi mỏng, chiên vàng giòn, muối hồng Himalaya.",
+    "price": 25000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY-A99Gg24r_fu7DYSfEPhfpBP59Rto40B6DWiFCmEWB7h_RTYt2Hr8tc&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY-A99Gg24r_fu7DYSfEPhfpBP59Rto40B6DWiFCmEWB7h_RTYt2Hr8tc&s=10"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 99,
+    "soldCount": 1,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-07-01T04:25:52.330Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad8",
+    "name": "Salad Dầu Giấm Kiểu Ý",
+    "description": "Rau xanh tươi, cà chua bi, oliu, phô mai parmesan bào, sốt dầu giấm.",
+    "price": 55000,
+    "imageUrl": "https://storage.googleapis.com/onelife-public/blog.onelife.vn/2026/03/8c9eec9a-salad-tron-dau-giam-4.jpg",
+    "imageUrls": [
+      "https://storage.googleapis.com/onelife-public/blog.onelife.vn/2026/03/8c9eec9a-salad-tron-dau-giam-4.jpg"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ada",
+    "name": "Súp Cua Đặc Biệt",
+    "description": "Súp cua thịt cua tươi, trứng gà, nấm đông cô, nước dùng đậm đà.",
+    "price": 55000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSozrJN1OYH0vaCmLFGeCW99ozDuqM3vSozVWksA-YLz9EVCpLkm6s6S9A&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSozrJN1OYH0vaCmLFGeCW99ozDuqM3vSozVWksA-YLz9EVCpLkm6s6S9A&s=10"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae0",
+    "name": "Bánh Flan Caramel",
+    "description": "Bánh flan mềm mịn kiểu Pháp, sốt caramel đắng nhẹ.",
+    "price": 25000,
+    "imageUrl": "https://chefdzung.com.vn/uploads/images/ngoc-linh/banh-caramen.jpg",
+    "imageUrls": [
+      "https://chefdzung.com.vn/uploads/images/ngoc-linh/banh-caramen.jpg"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9af1",
+    "name": "Nước Cam Ép Tươi",
+    "description": "Cam Valencia ép tươi nguyên chất 350ml, không thêm đường.",
+    "price": 35000,
+    "imageUrl": "https://file.hstatic.net/200000031322/file/9_93026d56b61f46c1a435755ddee3d3cd_grande.gif",
+    "imageUrls": [
+      "https://file.hstatic.net/200000031322/file/9_93026d56b61f46c1a435755ddee3d3cd_grande.gif"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+    {
+    "id": "6a23b05c1cd65883e27f9abd",
+    "name": "Combo Đôi",
+    "description": "2 Burger tùy chọn + 2 Khoai Nhỏ + 2 Nước Ngọt.",
+    "price": 175000,
+    "imageUrl": "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371865/Food_photography_fast_food_website_202607070404_dxfrv6.jpg",
+    "imageUrls": [
+      "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371865/Food_photography_fast_food_website_202607070404_dxfrv6.jpg"
+    ],
+    "category": "combo-khuyen-mai",
+    "categoryName": "Combo / Khuyến Mãi",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9abe",
+    "name": "Combo Pizza & Wings",
+    "description": "1 Pizza 25cm + 6 Cánh Gà Sốt Cay + 2 Pepsi.",
+    "price": 220000,
+    "imageUrl": "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371861/Pizza_wings_Pepsi_commercial_studio_202607070404_ejpluk.jpg",
+    "imageUrls": [
+      "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371861/Pizza_wings_Pepsi_commercial_studio_202607070404_ejpluk.jpg"
+    ],
+    "category": "combo-khuyen-mai",
+    "categoryName": "Combo / Khuyến Mãi",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ac6",
+    "name": "Double Burger Deluxe",
+    "description": "2 lớp bò Angus 120g, 2 lớp phô mai, sốt secret recipe.",
+    "price": 115000,
+    "imageUrl": "https://corporate.mcdonalds.com/content/dam/sites/corp/nfl/newsroom/menu-items-2023/NR_202201_4308-005_DoubleQuarterPounderCheeseDeluxe_Shredded_2000x2000.png",
+    "imageUrls": [
+      "https://corporate.mcdonalds.com/content/dam/sites/corp/nfl/newsroom/menu-items-2023/NR_202201_4308-005_DoubleQuarterPounderCheeseDeluxe_Shredded_2000x2000.png"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9acf",
+    "name": "Tacos Bò Nướng",
+    "description": "Bánh tacos giòn, thịt bò nướng gia vị Tex-Mex, salsa tươi, kem chua.",
+    "price": 79000,
+    "imageUrl": "https://file.hstatic.net/1000389344/file/04525c440467620087e06f8a936b8368_fdf8ef74a0ee4019bc0cdd3415b77f9f_grande.jpg",
+    "imageUrls": [
+      "https://file.hstatic.net/1000389344/file/04525c440467620087e06f8a936b8368_fdf8ef74a0ee4019bc0cdd3415b77f9f_grande.jpg"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad1",
+    "name": "Gà Sốt Cay Thái Lan",
+    "description": "Công thức mới — gà tươi sốt sweet chili Thái, nước cốt dừa.",
+    "price": 82000,
+    "imageUrl": "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371759/Fried_chicken_wings_Thai_chili_202607070402_ekn74t.jpg",
+    "imageUrls": [
+      "https://res.cloudinary.com/df3hi1vey/image/upload/v1783371759/Fried_chicken_wings_Thai_chili_202607070402_ekn74t.jpg"
+    ],
+    "category": "mon-moi",
+    "categoryName": "Món Mới",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ad3",
+    "name": "Khoai Tây Chiên Lớn",
+    "description": "Phần khoai tây lớn, chiên giòn, đủ no cho 2 người chia.",
+    "price": 35000,
+    "imageUrl": "https://cdn.tgdd.vn/Files/2017/11/27/1045160/bi-quyet-chien-khoai-tay-thom-ngon-gion-rum-an-hoai-khong-chan-6.jpg",
+    "imageUrls": [
+      "https://cdn.tgdd.vn/Files/2017/11/27/1045160/bi-quyet-chien-khoai-tay-thom-ngon-gion-rum-an-hoai-khong-chan-6.jpg"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9adb",
+    "name": "Súp Bí Đỏ Kem",
+    "description": "Bí đỏ nghiền mịn, kem tươi, hạt hướng dương rang, thơm nhẹ.",
+    "price": 49000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTc7LxV1_UG9KIEy_jMDdELEcd_kzvbeMtSx3-kohefMjsXXp9R7TMT8I&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTc7LxV1_UG9KIEy_jMDdELEcd_kzvbeMtSx3-kohefMjsXXp9R7TMT8I&s=10"
+    ],
+    "category": "mon-an-kem",
+    "categoryName": "Món Ăn Kèm",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae1",
+    "name": "Panna Cotta Dâu",
+    "description": "Panna cotta kem tươi Ý, sốt dâu tươi, lá bạc hà trang trí.",
+    "price": 45000,
+    "imageUrl": "https://r2.web-work.4handy.vn/uploads/upload/2024/05/upload-64-1716456710291.jpeg",
+    "imageUrls": [
+      "https://r2.web-work.4handy.vn/uploads/upload/2024/05/upload-64-1716456710291.jpeg"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9ae4",
+    "name": "Muffin Blueberry",
+    "description": "Muffin blueberry Mỹ, mềm xốp, nở phồng, vị chua nhẹ.",
+    "price": 30000,
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpxF6rn_1RtlBszzsK0-nT292ts2KaqkvuYDAg6V4Xggi_yN4W_VjpaRE&s=10",
+    "imageUrls": [
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpxF6rn_1RtlBszzsK0-nT292ts2KaqkvuYDAg6V4Xggi_yN4W_VjpaRE&s=10"
+    ],
+    "category": "trang-mieng",
+    "categoryName": "Tráng Miệng",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23b05c1cd65883e27f9aeb",
+    "name": "Coca-Cola Lon 330ml",
+    "description": "Coca-Cola nhập khẩu lon 330ml, uống lạnh 4°C.",
+    "price": 20000,
+    "imageUrl": "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop",
+    "imageUrls": [
+      "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?q=80&w=800&auto=format&fit=crop"
+    ],
+    "category": "do-uong",
+    "categoryName": "Đồ Uống",
+    "brand": null,
+    "stock": 100,
+    "soldCount": 0,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T05:29:30.878Z",
+    "updatedAt": "2026-06-06T05:29:30.878Z"
+  },
+  {
+    "id": "6a23f53c791ada652927c94e",
+    "name": "Gà",
+    "description": "Gà rán",
+    "price": 15000,
+    "imageUrl": "https://res.cloudinary.com/df3hi1vey/image/upload/v1780741424/shop/82f4d68f-d47f-41c1-b307-ffc45597c229.jpg",
+    "imageUrls": [
+      "https://res.cloudinary.com/df3hi1vey/image/upload/v1780741424/shop/82f4d68f-d47f-41c1-b307-ffc45597c229.jpg"
+    ],
+    "category": "mon-chinh",
+    "categoryName": "Món Chính",
+    "brand": "KFC",
+    "stock": 12,
+    "soldCount": 3,
+    "status": "ACTIVE",
+    "createdAt": "2026-06-06T10:23:56.543Z",
+    "updatedAt": "2026-07-01T02:54:26.419Z"
+  }
+]

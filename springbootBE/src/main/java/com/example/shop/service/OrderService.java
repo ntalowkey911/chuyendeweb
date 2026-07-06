@@ -30,6 +30,7 @@ public class OrderService {
     private final CartService cartService;
     private final ProductService productService;
     private final PromotionService promotionService;
+    private final GhnService ghnService;
 
     public OrderResponse createOrder(CreateOrderRequest request) {
         Cart cart = cartService.getOrCreateCart();
@@ -37,11 +38,22 @@ public class OrderService {
             throw new BadRequestException("Cart is empty");
         }
 
+        int totalWeight = 500; // Base weight
+        int totalQuantity = 0;
+
         for (CartItem item : cart.getItems()) {
             Product product = productService.findProduct(item.getProductId());
             if (product.getStock() < item.getQuantity()) {
                 throw new BadRequestException("Insufficient stock for: " + product.getName());
             }
+            totalQuantity += item.getQuantity();
+        }
+        
+        totalWeight += (totalQuantity * 200);
+        int length = 20, width = 20, height = 20;
+        if (totalQuantity > 3) {
+            length = 35; width = 25; height = 25;
+            totalWeight += 500;
         }
 
         List<OrderItem> orderItems = new ArrayList<>();
@@ -72,6 +84,60 @@ public class OrderService {
             promotionService.incrementUsedCount(request.getPromotionCode());
         }
 
+        // Calculate Shipping Fee if GHN fields are provided
+        BigDecimal shippingFee = BigDecimal.ZERO;
+        boolean isFreeship = request.getPromotionCode() != null && 
+                            (request.getPromotionCode().toUpperCase().contains("FREESHIP") || 
+                             request.getPromotionCode().toUpperCase().contains("MIENPHISHIP"));
+        
+        if (!isFreeship && request.getToDistrictId() > 0 && request.getToWardCode() != null) {
+            try {
+                Object feeResponse = ghnService.calculateFee(request.getToDistrictId(), request.getToWardCode(), totalWeight, length, width, height);
+                if (feeResponse instanceof java.util.Map) {
+                    java.util.Map<?, ?> map = (java.util.Map<?, ?>) feeResponse;
+                    if (map.containsKey("data")) {
+                        java.util.Map<?, ?> dataMap = (java.util.Map<?, ?>) map.get("data");
+                        if (dataMap.containsKey("total")) {
+                            shippingFee = new BigDecimal(dataMap.get("total").toString());
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("GHN Fee Error: " + e.getMessage());
+            }
+        }
+        
+        BigDecimal totalAmount = cart.getTotalAmount().subtract(discountAmount).add(shippingFee);
+
+        // Create GHN Order
+        String ghnOrderCode = null;
+        if (request.getToDistrictId() > 0 && request.getToWardCode() != null) {
+            try {
+                Object orderResponse = ghnService.createOrder(
+                        request.getCustomerName(),
+                        request.getPhone(),
+                        request.getShippingAddress(),
+                        request.getToWardCode(),
+                        request.getToDistrictId(),
+                        totalAmount.intValue(),
+                        totalWeight, length, width, height,
+                        "FastBite Order " + orderCode
+                );
+                
+                if (orderResponse instanceof java.util.Map) {
+                    java.util.Map<?, ?> map = (java.util.Map<?, ?>) orderResponse;
+                    if (map.containsKey("data")) {
+                        java.util.Map<?, ?> dataMap = (java.util.Map<?, ?>) map.get("data");
+                        if (dataMap.containsKey("order_code")) {
+                            ghnOrderCode = dataMap.get("order_code").toString();
+                        }
+                    }
+                }
+            } catch (Exception e) {
+                System.err.println("GHN Create Order Error: " + e.getMessage());
+            }
+        }
+
         Order order = Order.builder()
                 .userId(userId)
                 .orderCode(orderCode)
@@ -79,9 +145,11 @@ public class OrderService {
                 .shippingAddress(request.getShippingAddress())
                 .phone(request.getPhone())
                 .paymentMethod(request.getPaymentMethod())
-                .totalAmount(cart.getTotalAmount())
+                .totalAmount(totalAmount)
                 .promotionCode(request.getPromotionCode())
                 .discountAmount(discountAmount)
+                .shippingFee(shippingFee)
+                .ghnOrderCode(ghnOrderCode)
                 .status(OrderStatus.PENDING)
                 .createdAt(Instant.now())
                 .build();
@@ -144,6 +212,8 @@ public class OrderService {
                 .totalAmount(order.getTotalAmount())
                 .promotionCode(order.getPromotionCode())
                 .discountAmount(order.getDiscountAmount())
+                .shippingFee(order.getShippingFee())
+                .ghnOrderCode(order.getGhnOrderCode())
                 .status(order.getStatus())
                 .createdAt(order.getCreatedAt())
                 .build();

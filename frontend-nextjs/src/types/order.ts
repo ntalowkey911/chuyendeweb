@@ -24,6 +24,8 @@ export interface Order {
   totalAmount: number;
   promotionCode?: string;
   discountAmount?: number;
+  shippingFee?: number;
+  ghnOrderCode?: string;
   status: OrderStatus;
   createdAt?: string;
 }
@@ -33,4 +35,7 @@ export interface CreateOrderRequest {
   phone: string;
   paymentMethod: PaymentMethod;
   promotionCode?: string;
+  toDistrictId?: number;
+  toWardCode?: string;
+  customerName?: string;
 }

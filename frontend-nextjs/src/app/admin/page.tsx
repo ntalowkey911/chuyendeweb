@@ -22,7 +22,7 @@ const fallbackImage =
 function AdminContent() {
   const [overview, setOverview] = useState<AdminOverview | null>(null);
   const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState<Product[]>([]);
+
   const [productPage, setProductPage] = useState(0);
   const [productTotalPages, setProductTotalPages] = useState(1);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
@@ -38,25 +38,48 @@ function AdminContent() {
     setOverview(data);
   };
 
-  const loadProducts = async (page: number) => {
-    const res = await adminService.getProducts(page, 10);
-    setProducts(res.data.content);
-    setProductTotalPages(res.data.totalPages || 1);
+  const [allProducts, setAllProducts] = useState<Product[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+
+  const loadProducts = async () => {
+    // Fetch all products (up to 1000) for local filtering and pagination
+    const res = await adminService.getProducts(0, 1000);
+    setAllProducts(res.data.content);
   };
+
+  const filteredProducts = useMemo(() => {
+    let filtered = allProducts;
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter(p => p.category === selectedCategory || p.categoryName === selectedCategory);
+    }
+    return filtered;
+  }, [allProducts, selectedCategory]);
+
+  const products = useMemo(() => {
+    const startIndex = productPage * 10;
+    return filteredProducts.slice(startIndex, startIndex + 10);
+  }, [filteredProducts, productPage]);
+
+  useEffect(() => {
+    setProductTotalPages(Math.max(1, Math.ceil(filteredProducts.length / 10)));
+    // Reset to page 0 if current page is out of bounds
+    if (productPage >= Math.ceil(filteredProducts.length / 10)) {
+      setProductPage(0);
+    }
+  }, [filteredProducts.length, productPage]);
 
   useEffect(() => {
     void (async () => {
       try {
-        await loadOverview(false);
+        await Promise.all([
+          loadOverview(false),
+          loadProducts()
+        ]);
       } finally {
         setLoading(false);
       }
     })();
   }, []);
-
-  useEffect(() => {
-    void loadProducts(productPage);
-  }, [productPage]);
 
   const customers = overview?.customers ?? [];
   const categories = overview?.categories ?? [];
@@ -78,7 +101,7 @@ function AdminContent() {
     await Promise.all([
       adminService.revalidateStorefront(productId),
       loadOverview(true),
-      loadProducts(productPage),
+      loadProducts(),
     ]);
   };
 
@@ -133,6 +156,12 @@ function AdminContent() {
                 Gọn dữ liệu hơn, vào nhanh hơn, chỉnh xong là ngoài shop cập nhật sớm hơn.
               </p>
             </div>
+              <Link
+                href="/admin/statistics"
+                className="rounded-full bg-emerald-600 px-5 py-3 text-sm font-bold text-white hover:bg-emerald-700"
+              >
+                Thống kê
+              </Link>
               <Link
                 href="/admin/promotions"
                 className="rounded-full bg-orange-500 px-5 py-3 text-sm font-bold text-white hover:bg-orange-600"
@@ -263,15 +292,32 @@ function AdminContent() {
           <section className="mb-8 rounded-[1.8rem] border border-slate-100 bg-white p-6 shadow-sm">
             <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-xl font-black text-slate-900">Sản phẩm</h2>
-              <button
-                className="rounded-full bg-primary px-4 py-2 font-bold text-white"
-                onClick={() => {
-                  setEditingProduct(null);
-                  setShowProductForm(true);
-                }}
-              >
-                Thêm sản phẩm
-              </button>
+              <div className="flex flex-wrap items-center gap-3">
+                <select
+                  className="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 outline-none focus:border-primary"
+                  value={selectedCategory}
+                  onChange={(e) => {
+                    setSelectedCategory(e.target.value);
+                    setProductPage(0);
+                  }}
+                >
+                  <option value="all">Tất cả danh mục</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="rounded-full bg-primary px-4 py-2 font-bold text-white"
+                  onClick={() => {
+                    setEditingProduct(null);
+                    setShowProductForm(true);
+                  }}
+                >
+                  Thêm sản phẩm
+                </button>
+              </div>
             </div>
 
             {showProductForm && (

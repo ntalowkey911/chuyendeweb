@@ -23,14 +23,25 @@ export function Header() {
   const pathname = usePathname();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { user, logout, isAdmin } = useAuthStore();
-  const { cart, fetchCart } = useCartStore();
+  const [mounted, setMounted] = useState(false);
+  const user = useAuthStore((state) => state.user);
+  const logout = useAuthStore((state) => state.logout);
+  const isAdmin = useAuthStore((state) => state.isAdmin);
+  const cart = useCartStore((state) => state.cart);
+  const fetchCart = useCartStore((state) => state.fetchCart);
 
   useEffect(() => {
-    if (user) {
+    setMounted(true);
+  }, []);
+
+  const userId = user?.id;
+  useEffect(() => {
+    if (userId) {
       void fetchCart();
     }
-  }, [fetchCart, user]);
+    // Dùng userId thay vì toàn bộ user object để tránh trigger khi user reference thay đổi
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -55,7 +66,7 @@ export function Header() {
           </Link>
         );
       })}
-      {user && (
+      {mounted && user && (
         <Link
           href="/profile/orders"
           className={
@@ -67,23 +78,13 @@ export function Header() {
           Đơn hàng
         </Link>
       )}
-      {user && isAdmin() && (
+      {mounted && user && isAdmin() && (
         <>
           <Link
             href="/admin"
             className={pathname === "/admin" ? "text-primary" : "text-orange-700 transition-colors hover:text-orange-800"}
           >
             Admin
-          </Link>
-          <Link
-            href="/admin/orders"
-            className={
-              pathname.startsWith("/admin/orders")
-                ? "text-primary"
-                : "text-orange-700 transition-colors hover:text-orange-800"
-            }
-          >
-            Đơn admin
           </Link>
         </>
       )}
@@ -124,32 +125,36 @@ export function Header() {
               <Button variant="ghost" size="icon" className="text-primary hover:bg-orange-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="8" cy="21" r="1" /><circle cx="19" cy="21" r="1" /><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" /></svg>
               </Button>
-              {cartCount > 0 && (
+              {mounted && cartCount > 0 && (
                 <span className="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-primary px-1 text-[10px] font-black text-white">
                   {cartCount}
                 </span>
               )}
             </Link>
 
-            <SignedIn>
-              <div className="hidden md:block">
-                <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
-              </div>
-            </SignedIn>
-            <SignedOut>
-              <div className="hidden items-center gap-2 md:flex">
-                <Link href="/login">
-                  <Button variant="ghost" className="rounded-full text-primary hover:bg-orange-50">
-                    Đăng nhập
-                  </Button>
-                </Link>
-                <Link href="/register">
-                  <Button className="rounded-full bg-primary px-5 text-white hover:bg-primary/90">
-                    Đăng ký
-                  </Button>
-                </Link>
-              </div>
-            </SignedOut>
+            {mounted && (
+              <>
+                <SignedIn>
+                  <div className="hidden items-center justify-center md:flex md:ml-3">
+                    <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
+                  </div>
+                </SignedIn>
+                <SignedOut>
+                  <div className="hidden items-center gap-2 md:flex">
+                    <Link href="/login">
+                      <Button variant="ghost" className="rounded-full text-primary hover:bg-orange-50">
+                        Đăng nhập
+                      </Button>
+                    </Link>
+                    <Link href="/register">
+                      <Button className="rounded-full bg-primary px-5 text-white hover:bg-primary/90">
+                        Đăng ký
+                      </Button>
+                    </Link>
+                  </div>
+                </SignedOut>
+              </>
+            )}
           </div>
         </Container>
 
@@ -157,22 +162,26 @@ export function Header() {
           <div className="border-t border-slate-100 bg-white lg:hidden">
             <Container className="flex flex-col gap-4 py-4 text-sm font-semibold">
               {sharedLinks}
-              <SignedIn>
-                <div className="flex items-center gap-4 rounded-2xl bg-slate-50 px-4 py-3 text-slate-700">
-                  <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
-                  <Link href="/profile" className="font-bold text-slate-900">Tài khoản của bạn</Link>
-                </div>
-              </SignedIn>
-              <SignedOut>
-                <div className="grid grid-cols-2 gap-3">
-                  <Link href="/login" className="rounded-2xl border border-slate-200 px-4 py-3 text-center text-slate-700">
-                    Đăng nhập
-                  </Link>
-                  <Link href="/register" className="rounded-2xl bg-primary px-4 py-3 text-center text-white">
-                    Đăng ký
-                  </Link>
-                </div>
-              </SignedOut>
+              {mounted && (
+                <>
+                  <SignedIn>
+                    <div className="flex items-center gap-4 rounded-2xl bg-slate-50 px-4 py-3 text-slate-700">
+                      <UserButton userProfileMode="navigation" userProfileUrl="/profile" afterSignOutUrl="/" />
+                      <Link href="/profile" className="font-bold text-slate-900">Tài khoản của bạn</Link>
+                    </div>
+                  </SignedIn>
+                  <SignedOut>
+                    <div className="grid grid-cols-2 gap-3">
+                      <Link href="/login" className="rounded-2xl border border-slate-200 px-4 py-3 text-center text-slate-700">
+                        Đăng nhập
+                      </Link>
+                      <Link href="/register" className="rounded-2xl bg-primary px-4 py-3 text-center text-white">
+                        Đăng ký
+                      </Link>
+                    </div>
+                  </SignedOut>
+                </>
+              )}
             </Container>
           </div>
         )}

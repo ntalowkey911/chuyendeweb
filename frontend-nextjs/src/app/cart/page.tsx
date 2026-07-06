@@ -66,7 +66,7 @@ function CartContent() {
                   </div>
                   <div className="flex justify-between text-slate-600">
                     <span>Phí giao hàng</span>
-                    <span className="font-semibold text-emerald-600">Miễn phí</span>
+                    <span className="font-medium text-slate-500">Tính ở bước thanh toán</span>
                   </div>
                 </div>
                 <div className="my-5 h-px bg-slate-100" />
