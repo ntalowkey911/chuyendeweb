@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -106,9 +107,12 @@ public class PaymentController {
         }
     }
 
+    @Value("${app.frontend.url:http://localhost:3000}")
+    private String frontendBaseUrl;
+
     @GetMapping("/vnpay_return")
     public void paymentReturn(@RequestParam Map<String, String> params, HttpServletResponse response) throws IOException {
-        String frontendUrl = "http://localhost:3000/payment/vnpay-return";
+        String frontendUrl = frontendBaseUrl + "/payment/vnpay-return";
         try {
             String vnp_SecureHash = params.get("vnp_SecureHash");
             if (vnp_SecureHash == null) {
